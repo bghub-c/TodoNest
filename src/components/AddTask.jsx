@@ -25,7 +25,7 @@ const AddTask = () => { // Components that adds Tasks
   };
 
   return (
-    <section className="w-fullsmartphone:mt-10 flex gap-4 flex-col items-center justify-center">
+    <section className="w-full smartphone:mt-12 laptop:mt-24 desktop:mt-24  flex gap-4 flex-col items-center justify-center">
         <input
           type="text"
           value={taskText}
