@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { addTask } from "../Global_state-redux/TaskActions"; 
 import FilterSelect from "./FilterSelect";
 
-const AddTask = () => {
+const AddTask = () => { // Components that adds Tasks
   const [taskText, setTaskText] = useState("");
   const dispatch = useDispatch();
 

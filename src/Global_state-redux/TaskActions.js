@@ -6,6 +6,8 @@ export const ISCOMPLETED_TASK = 'ISCOMPLETED_TASK';
 export const FILTER_TASK = 'FILTER_TASK';
 export const FETCH_TASKS_SUCCESS='FETCH_TASKS_SUCCESS';
 
+
+//Fetching data from local file 
 export const fetchTasks = () => {
   return async (dispatch) => {
     try {

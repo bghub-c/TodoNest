@@ -4,7 +4,7 @@ const initialState = {
   tasks: [],
   filter: "ALL"
 };
-
+// Reducers functions
 const taskReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_TASKS_SUCCESS:

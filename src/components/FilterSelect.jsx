@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FilterTask } from '../Global_state-redux/TaskActions';
 
-const FilterSelect = () => {
+const FilterSelect = () => {// Components that filter Tasks
   const dispatch = useDispatch();
   const currentFilter = useSelector((state) => state.filter);
 

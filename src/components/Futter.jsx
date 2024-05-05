@@ -1,7 +1,7 @@
 export default function Futter(){
     return(
-        <section className="w-full flex justify-center">
-        Footer
-        </section>
+        <section className="absolute bottom-0 w-full flex justify-center">
+    Copyrights &copy; {new Date().getFullYear()}
+</section>
     );
 }

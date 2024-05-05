@@ -4,7 +4,7 @@ import { Trash } from "@phosphor-icons/react";
 import SlideInNotifications from "./SlideInNotifications";
 import { AnimatePresence, motion } from "framer-motion";
 
-const Tasks = () => {
+const Tasks = () => {// Components that Renders Tasks
   const state = useSelector((state) => state.tasks);
   const tasks = state.tasks;
   const currentFilter = state.filter;
