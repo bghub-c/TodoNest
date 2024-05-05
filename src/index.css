@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.m-plus{
+    font-family: "M PLUS Rounded 1c", sans-serif;
+    font-style: normal;
+  }
+.quicksand{
+  font-family: "Quicksand", sans-serif;
+  font-style: normal;
+}
+.caveat-600 {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+.caveat-900 {
+    font-family: "Caveat", cursive;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+  }
+::-webkit-scrollbar {
+    margin: 10px 0; /* Margin from top and bottom */
+    width: 5px; /* Width of the scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    margin: 30px ;/* Color of the scrollbar track */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #DFC4B4; 
+    border-radius: 5px; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the scrollbar thumb on hover */
+  }
+  
