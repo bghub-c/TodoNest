@@ -1,48 +1,100 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTask } from "../Global_state-redux/TaskActions"; 
-import FilterSelect from "./FilterSelect";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "../Global_state-redux/TaskActions";
+import { Plus } from "@phosphor-icons/react";
 
-const AddTask = () => { // Components that adds Tasks
-  const [taskText, setTaskText] = useState("");
+const AddTask = () => {
   const dispatch = useDispatch();
+  const [isClicked, setisClicked] = useState(false); 
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
 
-  const handleAddTask = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const taskText = formData.get("taskText");
+    const taskHeading = formData.get("taskHeading");
+    const taskbgCol = formData.get("taskbgCol");
     if (taskText.trim() !== "") {
-      dispatch(addTask(taskText));
-      setTaskText("");
+      dispatch(addTask(taskText, taskHeading, taskbgCol));
+      setisClicked(!isClicked);
     }
   };
 
-  const handleInputChange = (e) => {
-    setTaskText(e.target.value);
-  };
-
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleAddTask();
-    }
+  const handleButtonClick = (color) => {
+    document.getElementById("taskbgCol").value = color;
   };
 
   return (
-    <section className="w-full smartphone:mt-12 laptop:mt-24 desktop:mt-24  flex gap-4 flex-col items-center justify-center">
-        <input
-          type="text"
-          value={taskText}
-          placeholder="Start typing your To-Do here"
-          onChange={handleInputChange}
-          onKeyPress={handleKeyPress}
-          className="py-1 w-[300px] mt-3  bg-white border-b-2 border-dashed border-black 
-          placeholder:text-black placeholder:text-center
-          focus:outline-none focus:border-bg2 focus:bg-white focus:border-2 rounded-2xl focus:rounded-md"
-        />
-      <div id="buttons" className="flex flex-row gap-4">
-        <button onClick={handleAddTask} className="rounded-2xl border-b-2 border-dashed border-black bg-white px-5 py-2  uppercase text-black transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:rounded-md hover:shadow-[4px_4px_0px_black] active:translate-x-[0px] active:translate-y-[0px] active:rounded-2xl active:shadow-none">
-          Add task
-        </button>
-        <FilterSelect />
-      </div>
-    </section>
+    <>
+      {isClicked ? (
+        <section className="absolute w-screen flex items-center justify-center">
+          <form onSubmit={handleSubmit}>
+            <div>
+              <input
+                type="text"
+                name="taskHeading"
+                placeholder="Enter heading here"
+                className=""
+              />
+              <input
+                type="text"
+                name="taskText"
+                placeholder="Start typing your To-Do here"
+                className=""
+              />
+              <input
+                type="hidden"
+                id="taskbgCol"
+                name="taskbgCol"
+                value=""
+              />
+              <span className="flex gap-4 flex-row">
+              <button
+                  type="button"
+                  onClick={() => handleButtonClick(`${isDarkmode?"bg-white":"bg-bg1"}`)}
+                  className={`px-1 ${isDarkmode?"bg-white text-bg1":"bg-bg1"} rounded-md `}
+                >
+                  Default
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleButtonClick("bg-red-500")}
+                  className="w-5 h-5 rounded-full bg-red-500 ring-offset-2 ring-offset-white focus:ring-2 ring-red-700"
+                >
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleButtonClick("bg-blue-500")}
+                  className="w-5 h-5 rounded-full bg-blue-500 ring-offset-2 ring-offset-white focus:ring-2 ring-blue-700"
+                >
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleButtonClick("bg-yellow-500")}
+                  className="w-5 h-5 rounded-full bg-yellow-500 ring-offset-2 ring-offset-white focus:ring-2 ring-yellow-700"
+                >
+                </button>
+              </span>
+              <button type="submit">Add task</button>
+            </div>
+          </form>
+        </section>
+      ) : (
+        <section className="w-screen flex items-center justify-between text-5xl roboto-condensed font-thin tracking-tighter px-5 py-3 transition-all ease-in-out">
+          <h1>Your Tasks</h1>
+          <button
+            onClick={() => setisClicked(!isClicked)}
+            className={`p-3 border-2 rounded-xl ${
+              isDarkmode
+                ? " hover:bg-white hover:text-bg1 hover:border-black "
+                : "hover:bg-bg1 hover:text-white hover:border-white"
+            }  hover:shadow-lg shadow-white  transition-all ease-out `}
+          >
+            <Plus size={25} weight="regular" />
+          </button>
+        </section>
+      )}
+    </>
   );
 };
 

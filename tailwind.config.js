@@ -19,7 +19,7 @@ export default {
         desktop: "1920px",
       },
       colors: {
-        bg1: "#DFC4B4",
+        bg1: "#1e1e1e",
         bg2: "#FFFDED",
         bg3: "#CEE0D2",
         bg4:"#FAFBF9",

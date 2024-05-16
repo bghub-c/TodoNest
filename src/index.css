@@ -2,26 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-.m-plus{
-    font-family: "M PLUS Rounded 1c", sans-serif;
-    font-style: normal;
-  }
+.nunito{
+  font-family: "Nunito", sans-serif;
+}
+.roboto-condensed {
+  font-family: "Roboto Condensed", sans-serif;
+}
 .quicksand{
   font-family: "Quicksand", sans-serif;
+}
+.m-plus-rounded-1c-regular {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 400;
   font-style: normal;
 }
-.caveat-600 {
+.caveat{
   font-family: "Caveat", cursive;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
 }
-.caveat-900 {
-    font-family: "Caveat", cursive;
-    font-optical-sizing: auto;
-    font-weight: 700;
-    font-style: normal;
-  }
 ::-webkit-scrollbar {
     margin: 10px 0; /* Margin from top and bottom */
     width: 5px; /* Width of the scrollbar */
