@@ -24,7 +24,7 @@ const FilterSelect = () => {
   return (
     <section className="h-12 px-5 w-screen flex items-center justify-between">
       <select
-        className={`h-fit w-fit py-2 text-sm rounded-lg focus:outline-none uppercase pr-3 pl-1 ${isDarkmode?"text-bg1":"text-black bg-black/10"} transition-all ease-out duration-700`}
+        className={`h-fit w-fit py-2 text-sm tracking-tighter rounded-lg focus:outline-none uppercase pr-3 pl-1 ${isDarkmode?"text-bg1":"text-black bg-black/10"} transition-all ease-out duration-700`}
         value={currentFilter}
         onChange={(e) => handleFilter(e.target.value)}
       >
@@ -32,12 +32,12 @@ const FilterSelect = () => {
         <option value="COMPLETED">Completed</option>
         <option value="INCOMPLETE">Incomplete</option>
       </select>
-      <span className="h-full flex gap-2">
+      <span className="h-full flex gap-2 mr-3">
         <button value="GRID" onClick={() => handleViewState("GRID")} className={`${isDarkmode?"text-w1":"text-black/60"} transition-all ease-out duration-700`}>
-        <SquaresFour size={32} weight={`${viewState==="GRID"?"bold":"light"}`} />
+        <SquaresFour size={32} weight={`${viewState==="GRID"?"fill":"light"}`} />
         </button>
         <button value="LIST" onClick={() => handleViewState("LIST")} className={`${isDarkmode?"text-w1":"text-black/60"} transition-all ease-out duration-700`}>
-        <ListBullets size={32} weight={`${viewState==="LIST"?"bold":"light"}`} />
+        <ListBullets size={32} weight={`${viewState==="LIST"?"fill":"light"}`} />
         </button>
       </span>
     </section>

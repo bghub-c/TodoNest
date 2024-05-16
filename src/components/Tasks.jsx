@@ -8,9 +8,10 @@ const Tasks = () => {
   // Components that Renders Tasks
   const state = useSelector((state) => state.tasks);
   const tasks = state.tasks;
-  
   const currentFilter = state.filter;
+  const viewState = state.viewState;
   const dispatch = useDispatch();
+
   const handleDeleteTask = (taskId) => {
     dispatch(deleteTask(taskId));
   };
@@ -19,16 +20,6 @@ const Tasks = () => {
     dispatch(isCompleteTask({ id: taskId, isCompleted: !isCompleted }));
   };
 
-const Randomcolor=()=>{
-  var col;
-
-   switch(Math.round(Math.random())){
-    case 1:{
-      col="bg-blue-300"
-    }
-   }
-  return(col)
-}
   const filteredTasks = Array.isArray(tasks)
     ? tasks.filter((task) => {
         if (currentFilter === "ALL") return true;
@@ -38,33 +29,35 @@ const Randomcolor=()=>{
       })
     : [];
 
+  const calculateHeight = (textLength) => {
+    // Define your conditions for setting the height dynamically
+    if (textLength > 100) return "h-96";
+    if (textLength > 50) return "h-20";
+    return "h-7";
+  };
+
+  const containerClasses = viewState === "LIST" ? "flex-col" : "flex-wrap";
+
   return (
-    <div className="">
-      <motion.ul layout className="w-full flex flex-col">
+    <div className="flex justify-center">
+      <motion.ul layout className={`w-11/12  flex ${containerClasses} `}>
         <AnimatePresence>
-          {filteredTasks.length > 0 ? (
-            filteredTasks
-              .map((task, index) => (
-                <motion.li
-                  layout
-                  key={index}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  className={`${task.bgCol}`}
-                >
-                  {task.heading}
-                </motion.li>
-              ))
-              .reverse()
-          ) : (
-            <motion.li className="p-2 pb-1 flex gap-2 items-center justify-between border-b border-black/20">
-              <div id="text_container" className="flex gap-2 items-center">
-                <div className="w-[7px] h-[7px] rounded-full bg-black"></div>
-                No Tasks
-              </div>
+          {filteredTasks.map((task, index) => (
+            <motion.li
+              layout
+              key={index}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className={`${task.bgCol} rounded-md `}
+            >
+              <span>
+                <h1>{task.heading}</h1>
+                <h2>{task.creationTime}</h2>
+              </span>
+              <p className="text-wrap overflow-wrap break-word">{task.text}</p>
             </motion.li>
-          )}
+          )).reverse()}
         </AnimatePresence>
       </motion.ul>
     </div>
@@ -72,6 +65,7 @@ const Randomcolor=()=>{
 };
 
 export default Tasks;
+
 /*
 <div
                     id="text_container"
