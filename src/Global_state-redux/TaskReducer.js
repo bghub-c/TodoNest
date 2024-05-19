@@ -1,7 +1,56 @@
 import { ADD_TASK, DELETE_TASK, FILTER_TASK, ISCOMPLETED_TASK, FETCH_TASKS_SUCCESS, DARK_MODE, VIEW_STATE } from './TaskActions';
 
 const initialState = {
-  tasks: [],
+  tasks: [
+    {
+      id: 1,
+      heading: "Task 1",
+      text: "Task 1 description",
+      bgCol: "red",
+      completed: false,
+      creationTime: "19-May-2024"
+    },
+    {
+      id: 2,
+      heading: "Task 2",
+      text: "Task 2 description",
+      bgCol: "blue",
+      completed: false,
+      creationTime: "19-May-2024"
+    },
+    {
+      id: 3,
+      heading: "Task 3",
+      text: "Task 3 description",
+      bgCol: "green",
+      completed: false,
+      creationTime: "19-May-2024"
+    },
+    {
+      id: 4,
+      heading: "Task 4",
+      text: "Task 4 description",
+      bgCol: "yellow",
+      completed: false,
+      creationTime: "19-May-2024"
+    },
+    {
+      id: 5,
+      heading: "Task 5",
+      text: "Task 5 description",
+      bgCol: "purple",
+      completed: false,
+      creationTime: "19-May-2024"
+    },
+    {
+      id: 6,
+      heading: "Task 6",
+      text: "Task 6 description",
+      bgCol: "orange",
+      completed: false,
+      creationTime: "19-May-2024"
+    }
+  ],
   filter: "ALL",
   darkMode: true,
   viewState:"GRID" 

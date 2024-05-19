@@ -1,16 +1,53 @@
 import { useSelector, useDispatch } from "react-redux";
 import { deleteTask, isCompleteTask } from "../Global_state-redux/TaskActions";
-import { Trash } from "@phosphor-icons/react";
-import SlideInNotifications from "./SlideInNotifications";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Tasks = () => {
-  // Components that Renders Tasks
   const state = useSelector((state) => state.tasks);
   const tasks = state.tasks;
   const currentFilter = state.filter;
   const viewState = state.viewState;
   const dispatch = useDispatch();
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  console.log(tasks)
+  const calculateColor = (color) => {
+    if (!isDarkmode) {
+      switch (color) {
+        case 'red':
+          return "bg-c1";
+        case 'blue':
+          return "bg-c2";
+        case 'green':
+          return "bg-c3";
+        case 'yellow':
+          return "bg-c4";
+        case 'purple':
+          return "bg-c5";
+        case 'orange':
+          return "bg-c6";
+        default:
+          return "border border-black/20"; // Return empty string for unknown colors
+      }
+    } else {
+      switch (color) {
+        case 'red':
+          return "bg-c1lt"; // Lighter shade for red in light mode
+        case 'blue':
+          return "bg-c2lt"; // Lighter shade for blue in light mode
+        case 'green':
+          return "bg-c3lt"; // Lighter shade for green in light mode
+        case 'yellow':
+          return "bg-c4lt"; // Lighter shade for yellow in light mode
+        case 'purple':
+          return "bg-c5lt"; // Lighter shade for purple in light mode
+        case 'orange':
+          return "bg-c6lt"; // Lighter shade for orange in light mode
+        default:
+          return "border border-w1/30"; // Return empty string for unknown colors
+      }
+    }
+  };
+  
 
   const handleDeleteTask = (taskId) => {
     dispatch(deleteTask(taskId));
@@ -29,18 +66,10 @@ const Tasks = () => {
       })
     : [];
 
-  const calculateHeight = (textLength) => {
-    // Define your conditions for setting the height dynamically
-    if (textLength > 100) return "h-96";
-    if (textLength > 50) return "h-20";
-    return "h-7";
-  };
-
   const containerClasses = viewState === "LIST" ? "flex-col" : "flex-wrap";
-
   return (
     <div className="flex justify-center">
-      <motion.ul layout className={`w-11/12  flex ${containerClasses} `}>
+      <motion.ul layout className={`w-11/12  flex gap-2 ${containerClasses}`}>
         <AnimatePresence>
           {filteredTasks.map((task, index) => (
             <motion.li
@@ -49,9 +78,10 @@ const Tasks = () => {
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              className={`${task.bgCol} rounded-md `}
+              className={`rounded-md ${calculateColor(task.bgCol)} transition-colors ease-out`}
             >
               <span>
+                {task.bgCol}
                 <h1>{task.heading}</h1>
                 <h2>{task.creationTime}</h2>
               </span>
@@ -65,6 +95,7 @@ const Tasks = () => {
 };
 
 export default Tasks;
+
 
 /*
 <div

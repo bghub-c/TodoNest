@@ -19,13 +19,22 @@ export default {
         desktop: "1920px",
       },
       colors: {
-        bg1: "#1e1e1e",
+        bg1: "#202124",
         bg2: "#FFFDED",
         bg3: "#CEE0D2",
-        bg4:"#FAFBF9",
-        accent1: "#3A643B",
-        accent1ltt:"#DCEFDC",
-        accent1lt: "#F2FBF2",
+        bg4: "#FAFBF9",
+        c1: '#7AC9E2', // Original color
+        c2: '#9FE2AA', // Original color
+        c3: '#FADCD9', // Original color
+        c4: '#d3bfdb', // Original color
+        c5: '#FF847C', // Original color
+        c6: '#B4DDD3', // Original color
+        c1lt: '#356c9a', // Darker shade for c1 in dark mode
+        c2lt: '#578957', // Darker shade for c2 in dark mode
+        c3lt: '#d29c99', // Darker shade for c3 in dark mode
+        c4lt: '#472e5b', // Darker shade for c4 in dark mode
+        c5lt: '#c0504d', // Darker shade for c5 in dark mode
+        c6lt: '#0c625d', // Darker shade for c6 in dark mode
         w1: "#e9ecef",
         w2: "#edf2f4",
       },
