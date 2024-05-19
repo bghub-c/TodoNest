@@ -78,6 +78,7 @@ const Tasks = () => {
                 onClick={() => setSelectedTask(task)}
               >
                 <span>
+                  {task.id}
                   <h1>{task.heading}</h1>
                   <h2>{task.creationTime}</h2>
                 </span>

@@ -1,4 +1,4 @@
-import { ADD_TASK, DELETE_TASK, FILTER_TASK, ISCOMPLETED_TASK, FETCH_TASKS_SUCCESS, DARK_MODE, VIEW_STATE } from './TaskActions';
+import { ADD_TASK, DELETE_TASK, FILTER_TASK, ISCOMPLETED_TASK, FETCH_TASKS_SUCCESS, DARK_MODE, VIEW_STATE, CHANGE_TASK_COLOR } from './TaskActions';
 
 const initialState = {
   tasks: [
@@ -103,6 +103,14 @@ const taskReducer = (state = initialState, action) => {
       ...state,
       viewState: action.payload.types,
     };
+    case CHANGE_TASK_COLOR:
+      const { taskId, newColor } = action.payload;
+      return {
+        ...state,
+        tasks: state.tasks.map(task =>
+          task.id === taskId ? { ...task, bgCol: newColor } : task
+        ),
+      };
 
     default:
       return state;

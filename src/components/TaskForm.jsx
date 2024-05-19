@@ -30,7 +30,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
     <>
       {isClicked && (
         <>
-          <section className="absolute top-0 w-screen h-screen flex items-center justify-center">
+          <section className="absolute top-0 w-screen h-screen flex items-center justify-center text-gray-900">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
