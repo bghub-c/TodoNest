@@ -13,34 +13,34 @@ const Tasks = () => {
   const calculateColor = (color) => {
     if (!isDarkmode) {
       switch (color) {
-        case 'red':
+        case 'AzureBreeze':
           return "bg-c1";
-        case 'blue':
+        case 'MeadowMist':
           return "bg-c2";
-        case 'green':
+        case 'PeachyBlush':
           return "bg-c3";
-        case 'yellow':
+        case 'LavenderHaze':
           return "bg-c4";
-        case 'purple':
+        case 'CoralCrush':
           return "bg-c5";
-        case 'orange':
+        case 'MintWhisper':
           return "bg-c6";
         default:
           return "border border-black/20"; // Return empty string for unknown colors
       }
     } else {
       switch (color) {
-        case 'red':
+        case 'AzureBreeze':
           return "bg-c1lt"; // Lighter shade for red in light mode
-        case 'blue':
+        case 'MeadowMist':
           return "bg-c2lt"; // Lighter shade for blue in light mode
-        case 'green':
+        case 'PeachyBlush':
           return "bg-c3lt"; // Lighter shade for green in light mode
-        case 'yellow':
+        case 'LavenderHaze':
           return "bg-c4lt"; // Lighter shade for yellow in light mode
-        case 'purple':
+        case 'CoralCrush':
           return "bg-c5lt"; // Lighter shade for purple in light mode
-        case 'orange':
+        case 'MintWhisper':
           return "bg-c6lt"; // Lighter shade for orange in light mode
         default:
           return "border border-w1/30"; // Return empty string for unknown colors
@@ -81,7 +81,6 @@ const Tasks = () => {
               className={`rounded-md ${calculateColor(task.bgCol)} transition-colors ease-out`}
             >
               <span>
-                {task.bgCol}
                 <h1>{task.heading}</h1>
                 <h2>{task.creationTime}</h2>
               </span>

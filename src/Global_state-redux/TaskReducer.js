@@ -3,10 +3,18 @@ import { ADD_TASK, DELETE_TASK, FILTER_TASK, ISCOMPLETED_TASK, FETCH_TASKS_SUCCE
 const initialState = {
   tasks: [
     {
+      id: 0,
+      heading: "Task 0",
+      text: "Task 0 description",
+      bgCol: "DEFAULT",
+      completed: false,
+      creationTime: "19-May-2024"
+    },
+    {
       id: 1,
       heading: "Task 1",
       text: "Task 1 description",
-      bgCol: "red",
+      bgCol: "AzureBreeze",
       completed: false,
       creationTime: "19-May-2024"
     },
@@ -14,7 +22,7 @@ const initialState = {
       id: 2,
       heading: "Task 2",
       text: "Task 2 description",
-      bgCol: "blue",
+      bgCol: "MeadowMist",
       completed: false,
       creationTime: "19-May-2024"
     },
@@ -22,7 +30,7 @@ const initialState = {
       id: 3,
       heading: "Task 3",
       text: "Task 3 description",
-      bgCol: "green",
+      bgCol: "PeachyBlush",
       completed: false,
       creationTime: "19-May-2024"
     },
@@ -30,7 +38,7 @@ const initialState = {
       id: 4,
       heading: "Task 4",
       text: "Task 4 description",
-      bgCol: "yellow",
+      bgCol: "LavenderHaze",
       completed: false,
       creationTime: "19-May-2024"
     },
@@ -38,7 +46,7 @@ const initialState = {
       id: 5,
       heading: "Task 5",
       text: "Task 5 description",
-      bgCol: "purple",
+      bgCol: "CoralCrush",
       completed: false,
       creationTime: "19-May-2024"
     },
@@ -46,7 +54,7 @@ const initialState = {
       id: 6,
       heading: "Task 6",
       text: "Task 6 description",
-      bgCol: "orange",
+      bgCol: "MintWhisper",
       completed: false,
       creationTime: "19-May-2024"
     }

@@ -23,12 +23,12 @@ export default {
         bg2: "#FFFDED",
         bg3: "#CEE0D2",
         bg4: "#FAFBF9",
-        c1: '#7AC9E2', // Original color
-        c2: '#9FE2AA', // Original color
-        c3: '#FADCD9', // Original color
-        c4: '#d3bfdb', // Original color
-        c5: '#FF847C', // Original color
-        c6: '#B4DDD3', // Original color
+        c1: '#7AC9E2', // Original color Azure Breeze
+        c2: '#9FE2AA', // Original color Meadow Mist
+        c3: '#FADCD9', // Original color Peachy Blush
+        c4: '#d3bfdb', // Original color Lavender Haze
+        c5: '#FF847C', // Original color Coral Crush
+        c6: '#B4DDD3', // Original color Mint Whisper
         c1lt: '#356c9a', // Darker shade for c1 in dark mode
         c2lt: '#578957', // Darker shade for c2 in dark mode
         c3lt: '#d29c99', // Darker shade for c3 in dark mode

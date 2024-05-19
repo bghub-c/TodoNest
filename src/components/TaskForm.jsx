@@ -100,39 +100,39 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                     onClick={() =>
                       handleButtonClick(`${isDarkmode ? "bg-white" : "bg-bg1"}`)
                     }
-                    className={`px-3 py-1 rounded-md  bg-w1 ring-black text-gray-800 focus:ring shadow-lg focus:shadow-white/20`}
+                    className={`px-3 py-1 rounded-md  bg-w1 ring-black text-gray-800 hover:ring-2 focus:ring-2 focus:scale-105 transition-all shadow-lg focus:shadow-white/20`}
                   >
                     Default
                   </button>
                   <button
                     type="button"
-                    onClick={() => handleButtonClick("red")}
-                    className="w-5 h-5 rounded-full bg-red-500 ring-offset-2 ring-offset-white focus:ring-2 ring-red-700 shadow-lg focus:shadow-red-700"
+                    onClick={() => handleButtonClick("AzureBreeze")}
+                    className="w-5 h-5 rounded-full bg-c1lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 focus:scale-105 transition-all  ring-c1lt shadow-lg focus:shadow-c1"
                   ></button>
                   <button
                     type="button"
-                    onClick={() => handleButtonClick("blue")}
-                    className="w-5 h-5 rounded-full bg-blue-500 ring-offset-2 ring-offset-white focus:ring-2 ring-blue-700 shadow-lg focus:shadow-blue-700"
+                    onClick={() => handleButtonClick("MeadowMist")}
+                    className="w-5 h-5 rounded-full bg-c2lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 focus:scale-105 transition-all ring-c2lt shadow-lg focus:shadow-c2/50"
                   ></button>
                   <button
                     type="button"
-                    onClick={() => handleButtonClick("green")}
-                    className="w-5 h-5 rounded-full bg-green-500 ring-offset-2 ring-offset-white focus:ring-2 ring-green-700 shadow-lg focus:shadow-green-700"
+                    onClick={() => handleButtonClick("PeachyBlush")}
+                    className="w-5 h-5 rounded-full bg-c3lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 focus:scale-105 transition-all ring-c3lt shadow-lg focus:shadow-c3/50"
                   ></button>
                   <button
                     type="button"
-                    onClick={() => handleButtonClick("yellow")}
-                    className="w-5 h-5 rounded-full bg-yellow-500 ring-offset-2 ring-offset-white focus:ring-2 ring-yellow-700 shadow-lg focus:shadow-yellow-700"
+                    onClick={() => handleButtonClick("LavenderHaze")}
+                    className="w-5 h-5 rounded-full bg-c4lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 focus:scale-105 transition-all ring-c4 shadow-lg focus:shadow-c4/50"
                   ></button>
                   <button
                     type="button"
-                    onClick={() => handleButtonClick("purple")}
-                    className="w-5 h-5 rounded-full bg-purple-500 ring-offset-2 ring-offset-white focus:ring-2 ring-purple-700 shadow-lg focus:shadow-purple-700"
+                    onClick={() => handleButtonClick("CoralCrush")}
+                    className="w-5 h-5 rounded-full bg-c5lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 focus:scale-105 transition-all ring-c5 shadow-lg focus:shadow-c5/50"
                   ></button>
                   <button
                     type="button"
-                    onClick={() => handleButtonClick("orange")}
-                    className="w-5 h-5 rounded-full bg-orange-500 ring-offset-2 ring-offset-white focus:ring-2 ring-orange-700 shadow-lg focus:shadow-orange-700"
+                    onClick={() => handleButtonClick("MintWhisper")}
+                    className="w-5 h-5 rounded-full bg-c6lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 focus:scale-105 transition-all ring-c6lt shadow-lg focus:shadow-c6/50"
                   ></button>
                 </div>
                 <button
