@@ -3,6 +3,7 @@ import { Trash, X } from "@phosphor-icons/react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTaskColor, deleteTask } from "../Global_state-redux/TaskActions";
+import { motion } from "framer-motion";
 
 const TaskModal = ({ task, setSelectedTask }) => {
   
@@ -21,7 +22,12 @@ const TaskModal = ({ task, setSelectedTask }) => {
   if (!task) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur text-black flex items-center justify-center">
+    <motion.div 
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.15 }}
+     className="fixed inset-0 bg-black/60 backdrop-blur text-black flex items-center justify-center">
       <div className={`${!isDarkmode ?"bg-white/95 text-bg1":"bg-bg1/95 text-w1"} relative p-4 rounded-md max-w-md w-full`}>
         <button
           className="absolute top-2 right-2"
@@ -87,7 +93,7 @@ const TaskModal = ({ task, setSelectedTask }) => {
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 TaskModal.propTypes = {
