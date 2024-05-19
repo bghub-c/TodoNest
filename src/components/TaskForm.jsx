@@ -49,9 +49,9 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
               transition={{ duration: 0.15 }}
               className="z-20 w-fit bg-bg1 grid place-content-center p-6 rounded-lg shadow-2xl shadow-black/50"
             >
-              <h1 className="text-4xl tracking-tighter roboto-condensed my-1 mb-20 laptop:mb-8 text-slate-200">
-                Trying to add a ToDo?
-              </h1>
+              <p className="text-4xl tracking-tighter roboto-condensed my-1 mb-20 laptop:mb-8 text-slate-200">
+              Let's craft a new to-do!🚀
+              </p>
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="relative z-10">
                   <label
