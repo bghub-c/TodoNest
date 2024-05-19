@@ -74,7 +74,7 @@ const Tasks = () => {
                 exit={{ opacity: 0 }}
                 className={`relative rounded-md ${calculateColor(
                   task.bgCol
-                )} transition-colors ease-out overflow-hidden max-h-24 smartphone:min-h-20`}
+                )} transition-colors ease-out overflow-hidden max-h-24 text-nowrap smartphone:min-h-20`}
                 onClick={() => setSelectedTask(task)}
               >
                 <span>
