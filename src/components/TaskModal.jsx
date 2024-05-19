@@ -1,10 +1,12 @@
 import SlideInNotifications from "./SlideInNotifications";
 import { Trash, X } from "@phosphor-icons/react";
 import PropTypes from "prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { changeTaskColor, deleteTask } from "../Global_state-redux/TaskActions";
 
 const TaskModal = ({ task, setSelectedTask }) => {
+  
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
   const dispatch = useDispatch();
 
   const handleColorChange = (color) => {
@@ -20,7 +22,7 @@ const TaskModal = ({ task, setSelectedTask }) => {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur text-black flex items-center justify-center">
-      <div className="bg-white relative p-4 rounded-md max-w-md w-full">
+      <div className={`${!isDarkmode ?"bg-white/95 text-bg1":"bg-bg1/95 text-w1"}bg-white relative p-4 rounded-md max-w-md w-full`}>
         <button
           className="absolute top-2 right-2 text-black"
           onClick={() => setSelectedTask(null)}
