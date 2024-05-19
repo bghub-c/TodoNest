@@ -22,19 +22,19 @@ const TaskModal = ({ task, setSelectedTask }) => {
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur text-black flex items-center justify-center">
-      <div className={`${!isDarkmode ?"bg-white/95 text-bg1":"bg-bg1/95 text-w1"}bg-white relative p-4 rounded-md max-w-md w-full`}>
+      <div className={`${!isDarkmode ?"bg-white/95 text-bg1":"bg-bg1/95 text-w1"} relative p-4 rounded-md max-w-md w-full`}>
         <button
-          className="absolute top-2 right-2 text-black"
+          className="absolute top-2 right-2"
           onClick={() => setSelectedTask(null)}
         >
           <X className="text-red-700" size={32} />
         </button>
         <h1 className="text-xl font-bold mb-2">{task.heading}</h1>
-        <h2 className="text-gray-500 mb-4">{task.creationTime}</h2>
+        <h2 className=" mb-4">{task.creationTime}</h2>
         <p>{task.text}</p>
         <div
           id="button_container"
-          className="flex items-center gap-3 smartphone:flex-col smartphone:gap-1"
+          className="flex items-center gap-2 smartphone:flex-row "
         >
           <button
             type="button"
