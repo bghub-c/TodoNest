@@ -90,9 +90,10 @@ const Tasks = () => {
             .reverse()}
         </AnimatePresence>
       </motion.ul>
+      <AnimatePresence>
       {selectedTask && (
-        <TaskModal task={selectedTask} setSelectedTask={setSelectedTask} />
-      )}
+          <TaskModal task={selectedTask} setSelectedTask={setSelectedTask} />
+      )}</AnimatePresence>
     </div>
   );
 };
