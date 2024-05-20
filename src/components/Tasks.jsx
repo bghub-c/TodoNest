@@ -10,7 +10,6 @@ const Tasks = () => {
   const currentFilter = state.filter;
   const viewState = state.viewState;
   const isDarkmode = useSelector((state) => state.tasks.darkMode);
-
   const calculateColor = (color) => {
     if (!isDarkmode) {
       switch (color) {
@@ -90,9 +89,10 @@ const Tasks = () => {
         </AnimatePresence>
       </motion.ul>
       <AnimatePresence>
-      {selectedTask && (
+        {selectedTask && (
           <TaskModal task={selectedTask} setSelectedTask={setSelectedTask} />
-      )}</AnimatePresence>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { addTask } from "../Global_state-redux/TaskActions";
 import PropTypes from "prop-types";
+import ColorButtons from "./ColorButtons";
 
 const TaskForm = ({ isClicked, setIsClicked }) => {
   const dispatch = useDispatch();
@@ -57,7 +58,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
               className="z-20 w-fit bg-bg1 grid place-content-center p-6 rounded-lg shadow-2xl shadow-black/50"
             >
               <p className="text-4xl tracking-tighter roboto-condensed my-1 mb-20 laptop:mb-8 text-slate-200">
-              Let&apos;s craft a new to-do!🚀
+                Let&apos;s craft a new to-do!🚀
               </p>
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 <div className="relative z-10">
@@ -104,17 +105,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                 </div>
                 <input type="hidden" id="taskbgCol" name="taskbgCol" value="" />
                 <div className="flex gap-4 items-center">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      handleButtonClick(`${isDarkmode ? "bg-white" : "bg-bg1"}`)
-                    }
-                    className={`px-3 py-1 rounded-md  bg-w1 ring-black text-gray-800 hover:ring-2 focus:ring-2 focus:scale-105 transition-all shadow-lg focus:shadow-white/20`}
-                  >
-                    Default
-                  </button>
-                  {/* Add color selection buttons */}
-                  {/* Rest of the code remains the same */}
+                  <ColorButtons func={handleButtonClick}/>
                 </div>
                 <button
                   type="submit"
