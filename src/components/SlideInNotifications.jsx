@@ -39,7 +39,7 @@ const SlideInNotifications = ({ isCompleted }) => {
   );
 };
 
-const NOTIFICATION_TTL = 5000;
+const NOTIFICATION_TTL = 2500;
 
 const Notification = ({ text, id, removeNotif, isComplete }) => {
   useEffect(() => {
