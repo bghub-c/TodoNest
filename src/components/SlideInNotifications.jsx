@@ -78,7 +78,7 @@ const Notification = ({ text, id, removeNotif }) => {
 
 SlideInNotifications.propTypes = {
   initialIsCompleted: PropTypes.bool.isRequired,
-  taskId: PropTypes.number.isRequired,
+  taskId: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 

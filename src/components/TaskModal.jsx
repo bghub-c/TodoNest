@@ -130,7 +130,7 @@ const TaskModal = ({ task, setSelectedTask }) => {
 
 TaskModal.propTypes = {
   task: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     bgCol: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
     heading: PropTypes.string.isRequired,
