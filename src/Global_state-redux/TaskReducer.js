@@ -104,11 +104,10 @@ const taskReducer = (state = initialState, action) => {
       viewState: action.payload.types,
     };
     case CHANGE_TASK_COLOR:
-      const { taskId, newColor } = action.payload;
       return {
         ...state,
         tasks: state.tasks.map(task =>
-          task.id === taskId ? { ...task, bgCol: newColor } : task
+          task.id === action.payload.taskId ? { ...task, bgCol: action.payload.newColor } : task
         ),
       };
 

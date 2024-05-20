@@ -80,7 +80,7 @@ const Tasks = () => {
                   <h1>{task.heading}</h1>
                   <h2>{task.creationTime}</h2>
                 </span>
-                <p className="text-wrap overflow-wrap break-word">
+                <p className={`text-wrap overflow-wrap break-word ${task.completed?"line-through":""}`}>
                   {task.text}
                 </p>
               </motion.li>
@@ -90,7 +90,7 @@ const Tasks = () => {
       </motion.ul>
       <AnimatePresence>
         {selectedTask && (
-          <TaskModal task={selectedTask} setSelectedTask={setSelectedTask} />
+          <TaskModal task={selectedTask} setSelectedTask={setSelectedTask} colorfunc={calculateColor}  />
         )}
       </AnimatePresence>
     </div>

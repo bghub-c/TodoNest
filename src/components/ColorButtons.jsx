@@ -6,6 +6,7 @@ export default function ColorButtons({func}){
         initial={{x:-100, opacity:0}}
         animate={{x:0, opacity:1}}
         exit={{x:-100, opacity:0}}
+        transition={{duration:0.25, ease:"backInOut"}}
         id="button_container"
         className="flex items-center gap-2 smartphone:flex-row "
       >

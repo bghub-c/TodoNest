@@ -1,23 +1,66 @@
 import SlideInNotifications from "./SlideInNotifications";
-import { Palette, Trash, X } from "@phosphor-icons/react";
+import { Palette, Trash } from "@phosphor-icons/react";
 import PropTypes from "prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { changeTaskColor, deleteTask } from "../Global_state-redux/TaskActions";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ColorButtons from "./ColorButtons";
+
+const calculateColor = (color, isDarkmode) => {
+  if (!isDarkmode) {
+    switch (color) {
+      case "AzureBreeze":
+        return "border-c1";
+      case "MeadowMist":
+        return "border-c2";
+      case "PeachyBlush":
+        return "border-c3";
+      case "LavenderHaze":
+        return "border-c4";
+      case "CoralCrush":
+        return "border-c5";
+      case "MintWhisper":
+        return "border-c6";
+      default:
+        return "border border-black/20";
+    }
+  } else {
+    switch (color) {
+      case "AzureBreeze":
+        return "border-c1lt";
+      case "MeadowMist":
+        return "border-c2lt";
+      case "PeachyBlush":
+        return "border-c3lt";
+      case "LavenderHaze":
+        return "border-c4lt";
+      case "CoralCrush":
+        return "border-c5lt";
+      case "MintWhisper":
+        return "border-c6lt";
+      default:
+        return "border border-w1/30";
+    }
+  }
+};
 
 const TaskModal = ({ task, setSelectedTask }) => {
   const [palettExpanded, setpalettExpanded] = useState(false);
-
+  const [borderColor, setBorderColor] = useState("");
   const isDarkmode = useSelector((state) => state.tasks.darkMode);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setBorderColor(calculateColor(task.bgCol, isDarkmode));
+  }, [task.bgCol, isDarkmode, task]);
+
   const handleColorChange = (color) => {
-    // Dispatch action to change task color
+    setBorderColor(calculateColor(color, isDarkmode));
     dispatch(changeTaskColor(task.id, color));
-    setpalettExpanded(!palettExpanded);
+    setpalettExpanded(false); // Close palette after color selection
   };
+
   const handleDeleteTask = (taskId) => {
     dispatch(deleteTask(taskId));
     setSelectedTask(null);
@@ -26,65 +69,69 @@ const TaskModal = ({ task, setSelectedTask }) => {
   if (!task) return null;
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.15 }}
-      className="fixed inset-0 bg-black/60 backdrop-blur text-black flex items-center justify-center"
-    >
-      <div
-        className={`${
+    <section className="fixed inset-0 grid place-content-center bg-black/60 backdrop-blur">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.1 }}
+        onClick={() => setSelectedTask(null)}
+        className="absolute w-full h-full"
+      ></motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.15 }}
+        className={`relative flex flex-col justify-between rounded-md max-w-md w-96 laptop:w-[550px] h-fit laptop:h-[450px] p-2 pt-6 px-6 border ${borderColor} ${
           !isDarkmode ? "bg-white/95 text-bg1" : "bg-bg1/95 text-w1"
-        } relative p-4 rounded-md max-w-md w-full`}
-      >
-        <button
-          className="absolute top-2 right-2"
-          onClick={() => setSelectedTask(null)}
-        >
-          <X className="text-red-700" size={32} />
-        </button>
+        }`}
+      ><span>
         <h1 className="text-xl font-bold mb-2">{task.heading}</h1>
-        <h2 className=" mb-4">{task.creationTime}</h2>
-        <p>{task.text}</p>
-
-        <div className="overflow-hidden flex flex-row">
-          <AnimatePresence> 
-            {
-              !palettExpanded && <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              <Palette
-                onClick={() => setpalettExpanded(!palettExpanded)}
-                size={32}
-              />
-            </motion.span>
-            }
-          </AnimatePresence>
-          <AnimatePresence>
-            {palettExpanded && <ColorButtons func={handleColorChange} />}
-          </AnimatePresence>
+        <h2 className="text-sm text-gray-500 mb-4">{task.creationTime}</h2>
+        <div className="overflow-y-auto overflow-x-hidden mb-4 w-full h-52">
+          <p>{task.text}</p>
+        </div></span>
+        <div className="flex justify-between items-center mt-8">
+          <div className="flex items-center">
+            <AnimatePresence>
+              {!palettExpanded && (
+                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <Palette
+                    onClick={() => setpalettExpanded(true)}
+                    size={34}
+                    className="cursor-pointer"
+                  />
+                </motion.span>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {palettExpanded && <ColorButtons func={handleColorChange} />}
+            </AnimatePresence>
+          </div>
+          <div className="flex items-center space-x-2">
+            <SlideInNotifications
+              initialIsCompleted={task.completed}
+              taskId={task.id}
+              dispatch={dispatch}
+            />
+            <Trash
+              onClick={() => handleDeleteTask(task.id)}
+              size={32}
+              weight="duotone"
+              className="hover:scale-105 transition-all cursor-pointer"
+            />
+          </div>
         </div>
-
-        <SlideInNotifications
-          initialIsCompleted={task.completed}
-          taskId={task.id}
-          dispatch={dispatch}
-        />
-        <Trash
-          onClick={() => handleDeleteTask(task.id)}
-          size={32}
-          weight="duotone"
-          className="hover:scale-105 transition-all"
-        />
-      </div>
-    </motion.div>
+      </motion.div>
+    </section>
   );
 };
+
 TaskModal.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.number.isRequired,
+    bgCol: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,
     heading: PropTypes.string.isRequired,
     creationTime: PropTypes.string.isRequired,
