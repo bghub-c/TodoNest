@@ -10,8 +10,7 @@ const FilterSelect = () => {
   const isDarkmode = useSelector(state => state.tasks.darkMode);
   const [viewState, setViewState] = useState(
     useSelector((state) => state.tasks.viewState)
-  ); // Rename setviewState to setViewState
-
+  ); 
   const handleFilter = (filter) => {
     dispatch(FilterTask(filter));
   };
@@ -33,11 +32,11 @@ const FilterSelect = () => {
         <option value="INCOMPLETE">Incomplete</option>
       </select>
       <span className="h-full flex gap-2 mr-3">
-        <button value="GRID" onClick={() => handleViewState("GRID")} className={`${isDarkmode?"text-w1":"text-black/60"} hover:scale-110 transition-all ease-out duration-700`}>
-        <SquaresFour size={32} weight={`${viewState==="GRID"?"fill":"light"}`} />
+        <button value="GRID" onClick={() => handleViewState("GRID")} className={` hover:scale-110 transition-all ease-out duration-700`}>
+        <SquaresFour size={33} weight={`${viewState==="GRID"?"fill":"light"}`} />
         </button>
-        <button value="LIST" onClick={() => handleViewState("LIST")} className={`${isDarkmode?"text-w1":"text-black/60"} hover:scale-110 transition-all ease-out duration-700`}>
-        <ListBullets size={32} weight={`${viewState==="LIST"?"fill":"light"}`} />
+        <button value="LIST" onClick={() => handleViewState("LIST")} className={` hover:scale-110 transition-all ease-out duration-700`}>
+        <ListBullets size={33} weight={`${viewState==="LIST"?"fill":"light"}`} />
         </button>
       </span>
     </section>
