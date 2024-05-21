@@ -9,15 +9,6 @@ export const ISCOMPLETED_TASK = 'ISCOMPLETED_TASK';
 export const FILTER_TASK = 'FILTER_TASK';
 export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
 export const CHANGE_TASK_COLOR = 'CHANGE_TASK_COLOR';
-
-const date = new Date();
-const months = [
-  "January", "February", "March", "April", "May", "June", "July", "August",
-  "September", "October", "November", "December",
-];
-
-
-
 // Action Creators
 export const darkMode = (isOn) => ({
   type: DARK_MODE,
@@ -46,9 +37,30 @@ const updateLocalStorage = (tasks) => {
 };
 
 export const addTask = (text, heading, bgCol) => (dispatch, getState) => {
+  const formatDateTime = () => {
+    const date = new Date();
+    const months = [
+      "January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"
+    ];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+  
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const strMinutes = minutes < 10 ? '0' + minutes : minutes;
+  
+    const datePart = `${day}-${month}-${year}`;
+    const timePart = `${hours}:${strMinutes} ${ampm}`;
+    return { datePart, timePart };
+  };
   const newTask = {
     id: uuidv4(),
-    creationTime: `${date.getDate()}-${months[date.getMonth()]}-${date.getFullYear()}`,
+    creationTime: formatDateTime(),
     bgCol: bgCol,
     text: text,
     heading: heading,

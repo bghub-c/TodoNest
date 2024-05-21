@@ -83,12 +83,12 @@ const TaskModal = ({ task, setSelectedTask }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.15 }}
-        className={`relative flex flex-col justify-between rounded-md max-w-md w-96 laptop:w-[550px] h-fit laptop:h-[450px] p-2 pt-6 px-6 border ${borderColor} ${
+        className={`z-50 relative flex flex-col justify-between rounded-md max-w-md w-96 laptop:w-[550px] h-fit laptop:h-[450px] p-2 pt-6 px-6 border ${borderColor} ${
           !isDarkmode ? "bg-white/95 text-bg1" : "bg-bg1/95 text-w1"
         }`}
       ><span>
         <h1 className="text-xl font-bold mb-2">{task.heading}</h1>
-        <h2 className="text-sm text-gray-500 mb-4">{task.creationTime}</h2>
+        <h2 className="text-sm text-gray-500 mb-4">{`${task.creationTime.datePart} at ${task.creationTime.timePart}`}</h2>
         <div className="overflow-y-auto overflow-x-hidden mb-4 w-full h-52">
           <p>{task.text}</p>
         </div></span>
