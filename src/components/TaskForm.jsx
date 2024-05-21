@@ -76,7 +76,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                     onChange={(e) => setTaskHeading(e.target.value)}
                     onKeyPress={(e) => handleKeyPress(e, "taskText")}
                     placeholder="✏️ The heading here"
-                    className="px-2 py-3 w-full rounded-md border-2 border-gray-300 focus:border-blue-500 outline-none placeholder:text-gray-700 bg-slate-100"
+                    className="px-2 py-3 w-full rounded-md border-2 border-gray-300 focus:border-blue-500 outline-none placeholder:text-gray-700 placeholder:text-md bg-slate-100"
                   />
                 </div>
                 <div className="relative z-10">
@@ -94,18 +94,20 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                   >
                     📝 Your To-Do here...
                   </label>
-                  <input
+                  
+                  <textarea
+                  id="textinput"
                     type="text"
                     name="taskText"
                     value={taskText}
                     onChange={(e) => setTaskText(e.target.value)}
                     onKeyPress={(e) => handleKeyPress(e, "taskbgCol")}
-                    className="p-2 w-full h-28 text-start focus:border-blue-500 outline-none rounded-md border-2 border-gray-300 bg-slate-100"
+                    className="w-full p-3 h-28 align-top text-left focus:border-blue-500 outline-none rounded-md border-2 border-gray-300 bg-slate-100 overflow-wrap break-word text-wrap"
                   />
                 </div>
                 <input type="hidden" id="taskbgCol" name="taskbgCol" value="" />
                 <div className="flex gap-4 items-center">
-                  <ColorButtons func={handleButtonClick}/>
+                  <ColorButtons func={handleButtonClick} />
                 </div>
                 <button
                   type="submit"
