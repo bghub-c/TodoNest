@@ -79,7 +79,7 @@ const Tasks = () => {
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ type: "spring", duration: 0.5 }}
+              transition={{ type: "tween", duration: 0.5 }}
               layout
               className={`w-11/12 gap-3 smartphone:gap-2 p-2 ${containerClasses}`}
             >
@@ -91,7 +91,7 @@ const Tasks = () => {
                     initial={{ opacity: 0, scale: 0.5 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 1 }}
-                    transition={{ type: "spring", duration: 0.5 }}
+                    transition={{ type: "tween", duration: 0.5 }}
                     className={`relative rounded-md p-4  shadow-lg ${calculateColor(
                       task.bgCol
                     )} transition-all ease-out duration-300 overflow-hidden max-h-30 text-nowrap smartphone:min-h-20 cursor-pointer hover:shadow-2xl ${isDarkmode?"hover:shadow-white/10":"hover:shadow-bg1/30"}`}
