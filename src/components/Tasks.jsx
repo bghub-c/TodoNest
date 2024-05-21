@@ -13,7 +13,7 @@ const Tasks = () => {
   const currentFilter = state.filter;
   const viewState = state.viewState;
   useEffect(() => {
-    //dispatch(fetchTasks()); // Dispatch fetchTasks action only once when component mounts
+    dispatch(fetchTasks()); // Dispatch fetchTasks action only once when component mounts
   }, [dispatch]);
   const isDarkmode = useSelector((state) => state.tasks.darkMode);
   const calculateColor = (color) => {

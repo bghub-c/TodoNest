@@ -16,23 +16,7 @@ const months = [
   "September", "October", "November", "December",
 ];
 
-// Helper Function to Update Local Storage
-const updateLocalStorage = (tasks) => {
-  localStorage.setItem("myObjectKey", JSON.stringify(tasks));
-};
 
-// Fetch Tasks from Local Storage
-export const fetchTasks = () => {
-  return async (dispatch) => {
-    try {
-      const retrievedString = localStorage.getItem("myObjectKey");
-      const retrievedObject = JSON.parse(retrievedString) || [];
-      dispatch({ type: FETCH_TASKS_SUCCESS, payload: retrievedObject });
-    } catch (error) {
-      console.error('Error fetching tasks:', error);
-    }
-  };
-};
 
 // Action Creators
 export const darkMode = (isOn) => ({
@@ -45,6 +29,22 @@ export const ViewState = (types) => ({
   payload: { types },
 });
 
+export const fetchTasks = () => {
+  return async (dispatch) => {
+    try {
+      const retrievedString = localStorage.getItem("myObjectKey");
+      const retrievedObject = JSON.parse(retrievedString) || [];
+      dispatch({ type: FETCH_TASKS_SUCCESS, payload: { tasks: retrievedObject } });
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
+};
+
+const updateLocalStorage = (tasks) => {
+  localStorage.setItem("myObjectKey", JSON.stringify(tasks));
+};
+
 export const addTask = (text, heading, bgCol) => (dispatch, getState) => {
   const newTask = {
     id: uuidv4(),
@@ -52,10 +52,9 @@ export const addTask = (text, heading, bgCol) => (dispatch, getState) => {
     bgCol: bgCol,
     text: text,
     heading: heading,
-    completed: false,
   };
   dispatch({ type: ADD_TASK, payload: newTask });
-  updateLocalStorage(getState().tasks);
+  updateLocalStorage(getState().tasks.tasks);
 };
 
 export const changeTaskColor = (taskId, newColor) => (dispatch, getState) => {
@@ -63,7 +62,7 @@ export const changeTaskColor = (taskId, newColor) => (dispatch, getState) => {
     type: CHANGE_TASK_COLOR,
     payload: { taskId, newColor },
   });
-  updateLocalStorage(getState().tasks);
+  updateLocalStorage(getState().tasks.tasks);
 };
 
 export const deleteTask = (taskId) => (dispatch, getState) => {
@@ -71,15 +70,15 @@ export const deleteTask = (taskId) => (dispatch, getState) => {
     type: DELETE_TASK,
     payload: taskId,
   });
-  updateLocalStorage(getState().tasks);
+  updateLocalStorage(getState().tasks.tasks);
 };
 
 export const isCompleteTask = (taskId) => (dispatch, getState) => {
   dispatch({
     type: ISCOMPLETED_TASK,
-    payload: taskId,
+    payload: taskId.id,
   });
-  updateLocalStorage(getState().tasks);
+  updateLocalStorage(getState().tasks.tasks);
 };
 
 export const FilterTask = (filter) => (dispatch, getState) => {
@@ -87,5 +86,5 @@ export const FilterTask = (filter) => (dispatch, getState) => {
     type: FILTER_TASK,
     payload: filter,
   });
-  updateLocalStorage(getState().tasks);
+  updateLocalStorage(getState().tasks.tasks);
 };

@@ -13,14 +13,26 @@ const initialState = {
 const taskReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_TASKS_SUCCESS:
+      console.log("action.payload", action.payload);
       return {
         ...state,
-        tasks: action.payload,
+        tasks: action.payload.tasks,
       };
     case ADD_TASK:
+      console.log("Add task", state);
       return {
         ...state,
-        tasks: [...state.tasks, action.payload],
+        tasks: [
+          ...state.tasks,
+          {
+            id: action.payload.id,
+            creationTime: action.payload.creationTime,
+            bgCol: action.payload.bgCol,
+            text: action.payload.text,
+            heading: action.payload.heading,
+            completed: false, // Ensure new tasks have a default 'completed' status
+          },
+        ],
       };
     case DELETE_TASK:
       return {
@@ -32,13 +44,24 @@ const taskReducer = (state = initialState, action) => {
         ...state,
         filter: action.payload,
       };
-    case ISCOMPLETED_TASK:
-      return {
-        ...state,
-        tasks: state.tasks.map(task =>
-          task.id === action.payload ? { ...task, completed: !task.completed } : task
-        ),
-      };
+      case ISCOMPLETED_TASK:
+  return {
+    ...state,
+    tasks: state.tasks.map(task => {
+      if (task.id === action.payload) {
+        console.log("before isComplete", { ...task });
+        const updatedTask = { ...task, completed: !task.completed };
+        console.log("after isComplete", { ...updatedTask });
+        return updatedTask;
+      }
+      else{
+        console.log(action.payload)
+        return task;
+      }
+      
+    }),
+  };
+
     case DARK_MODE:
       return {
         ...state,
