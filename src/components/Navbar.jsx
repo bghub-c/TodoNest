@@ -7,7 +7,7 @@ export default function Navbar() {
   const isDarkmode = useSelector((state) => state.tasks.darkMode);
   return (
     <nav
-      className={` w-screen h-fit sticky top-0 text-5xl backdrop-blur-xl ${
+      className={` w-screen h-fit z-20 sticky top-0 text-5xl backdrop-blur-xl ${
         isDarkmode ? "backdrop-brightness-75" : "bg-slate-100"
       } transition-all ease-out`}
     >
