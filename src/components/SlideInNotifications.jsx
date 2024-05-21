@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { CheckSquareOffset, X, XCircle, CheckCircle } from "@phosphor-icons/react";
 import { isCompleteTask } from '../Global_state-redux/TaskActions';
 
-const NOTIFICATION_TTL = 5000; // Time-to-live for notifications in milliseconds
+const NOTIFICATION_TTL = 2500; // Time-to-live for notifications in milliseconds
 
 const SlideInNotifications = ({ initialIsCompleted, taskId, dispatch }) => {
   const [notifications, setNotifications] = useState([]);
