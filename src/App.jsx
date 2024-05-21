@@ -13,13 +13,13 @@ export default function App() {
     dispatch(fetchTasks()); // Dispatch fetchTasks action only once when component mounts
   }, [dispatch]);
   const isDarkmode = useSelector(state => state.tasks.darkMode);
-  return (
-    <section className={` w-screen h-screen overflow-x-hidden  ${isDarkmode?"bg-bg1 text-white border-white":""} transition-all`}>
+  return (<div className="h-full relative">
+    <section className={` w-screen h-screen pb-10 overflow-x-hidden flex flex-col ${isDarkmode?"bg-bg1 text-white":""} transition-all`}>
       <Navbar />
       <AddTask />
       <FilterSelect/>
       <Tasks />
-      <Futter />
     </section>
+    <Futter /></div>
   );
 }

@@ -93,7 +93,7 @@ const Tasks = () => {
                     transition={{ type: "spring", duration: 0.5 }}
                     className={`relative rounded-md p-4  shadow-lg ${calculateColor(
                       task.bgCol
-                    )} transition-all ease-out duration-300 overflow-hidden max-h-30 text-nowrap smartphone:min-h-20 cursor-pointer hover:shadow-2xl`}
+                    )} transition-all ease-out duration-300 overflow-hidden max-h-30 text-nowrap smartphone:min-h-20 cursor-pointer hover:shadow-2xl ${isDarkmode?"hover:shadow-white/10":"hover:shadow-bg1/30"}`}
                     onClick={() => setSelectedTask(task)}
                   >
                     <span className="block mb-4">
