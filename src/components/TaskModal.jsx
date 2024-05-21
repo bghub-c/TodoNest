@@ -101,7 +101,7 @@ const TaskModal = ({ task, setSelectedTask }) => {
                     onClick={() => setpalettExpanded(true)}
                     weight="duotone"
                     size={34}
-                    className="cursor-pointer text-yellow-800"
+                    className={`cursor-pointer ${isDarkmode?"text-yellow-600":"text-yellow-800"}`}
                   />
                 </motion.span>
               )}
