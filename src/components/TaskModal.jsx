@@ -48,15 +48,36 @@ const calculateColor = (color, isDarkmode) => {
 const TaskModal = ({ task, setSelectedTask }) => {
   const [palettExpanded, setpalettExpanded] = useState(false);
   const [borderColor, setBorderColor] = useState("");
+  const [buttonValue, setButtonValue] = useState(1);
   const isDarkmode = useSelector((state) => state.tasks.darkMode);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setBorderColor(calculateColor(task.bgCol, isDarkmode));
+    const borderClass = calculateColor(task.bgCol, isDarkmode);
+    setBorderColor(borderClass);
   }, [task.bgCol, isDarkmode, task]);
 
   const handleColorChange = (color) => {
-    setBorderColor(calculateColor(color, isDarkmode));
+    const borderClass = calculateColor(color, isDarkmode);
+    setBorderColor(borderClass);
+    setButtonValue(() => {
+      switch (color) {
+        case "AzureBreeze":
+          return 2;
+        case "MeadowMist":
+          return 3;
+        case "PeachyBlush":
+          return 4;
+        case "LavenderHaze":
+          return 5;
+        case "CoralCrush":
+          return 6;
+        case "MintWhisper":
+          return 7;
+        default:
+          return 1;
+      }
+    })
     dispatch(changeTaskColor(task.id, color));
     setpalettExpanded(false); // Close palette after color selection
   };
@@ -86,14 +107,16 @@ const TaskModal = ({ task, setSelectedTask }) => {
         className={`z-50 relative flex flex-col justify-between rounded-md max-w-md w-96 laptop:w-[550px] h-fit laptop:h-[450px] p-2 pt-6 px-6 border ${borderColor} ${
           !isDarkmode ? "bg-white/95 text-bg1" : "bg-bg1/95 text-w1"
         }`}
-      ><span>
-        <h1 className="text-2xl font-bold mb-2 roboto-condensed tracking-wider">{task.heading}</h1>
-        <h2 className="text-xs text-gray-500 mb-4 ml-2 tracking-tight">{`${task.creationTime.datePart} at ${task.creationTime.timePart}`}</h2>
-        <div className="overflow-y-auto overflow-x-hidden mb-4 w-full h-52">
-          <p className="quicksand tracking-wide">{task.text}</p>
-        </div></span>
+      >
+        <span>
+          <h1 className="text-2xl font-bold mb-2 roboto-condensed tracking-wider">{task.heading}</h1>
+          <h2 className="text-xs text-gray-500 mb-4 ml-1 tracking-tighter">{`${task.creationTime.datePart} at ${task.creationTime.timePart}`}</h2>
+          <div className="overflow-y-auto overflow-x-hidden mb-4 w-full h-52">
+            <p className="quicksand font-medium tracking-wide">{task.text}</p>
+          </div>
+        </span>
         <div className="flex justify-between items-center mt-8">
-          <div className="flex items-center">
+          <div className="flex items-center my-1">
             <AnimatePresence>
               {!palettExpanded && (
                 <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -101,13 +124,13 @@ const TaskModal = ({ task, setSelectedTask }) => {
                     onClick={() => setpalettExpanded(true)}
                     weight="duotone"
                     size={34}
-                    className={`cursor-pointer ${isDarkmode?"text-yellow-600":"text-yellow-400"}`}
+                    className={`cursor-pointer ${isDarkmode ? "text-yellow-600" : "text-yellow-500"} hover:scale-105 transition-all duration-700`}
                   />
                 </motion.span>
               )}
             </AnimatePresence>
             <AnimatePresence>
-              {palettExpanded && <ColorButtons func={handleColorChange} />}
+              {palettExpanded && <ColorButtons func={handleColorChange} buttonVal={buttonValue} />}
             </AnimatePresence>
           </div>
           <div className="flex items-center space-x-2">

@@ -71,7 +71,7 @@ const Tasks = () => {
     viewState === "LIST" ? "flex flex-col" : "grid grid-cols-2";
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="h-fit flex justify-center items-center">
       <AnimatePresence>
         {filteredTasks.length ? (
           <>
@@ -93,7 +93,7 @@ const Tasks = () => {
                     transition={{ type: "spring", duration: 0.5 }}
                     className={`relative rounded-md p-4  shadow-lg ${calculateColor(
                       task.bgCol
-                    )} transition-colors ease-out duration-300 overflow-hidden max-h-30 text-nowrap smartphone:min-h-20 cursor-pointer hover:shadow-2xl`}
+                    )} transition-all ease-out duration-300 overflow-hidden max-h-30 text-nowrap smartphone:min-h-20 cursor-pointer hover:shadow-2xl`}
                     onClick={() => setSelectedTask(task)}
                   >
                     <span className="block mb-4">

@@ -60,10 +60,10 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
               <p className="text-4xl tracking-tighter roboto-condensed my-1 mb-20 laptop:mb-8 text-slate-200">
                 Let&apos;s craft a new to-do!🚀
               </p>
-              <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-7">
                 <div className="relative z-10">
                   <label
-                    className={`absolute left-2  text-sm text-white transition-all ease-in-out ${
+                    className={`absolute left-2  text-sm text-white nunito tracking-tight transition-all ease-in-out duration-500 ${
                       taskHeading ? "-top-5" : "top-0 opacity-0"
                     }`}
                   >
@@ -76,19 +76,19 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                     onChange={(e) => setTaskHeading(e.target.value)}
                     onKeyPress={(e) => handleKeyPress(e, "taskText")}
                     placeholder="✏️ The heading here"
-                    className="px-2 py-3 w-full rounded-md border-2 border-gray-300 placeholder:text-gray-700 bg-slate-200"
+                    className="px-2 py-3 w-full rounded-md border-2 border-gray-300 focus:border-blue-500 outline-none placeholder:text-gray-700 bg-slate-100"
                   />
                 </div>
                 <div className="relative z-10">
                   <label
-                    className={`absolute left-1 text-sm text-white transition-all ${
+                    className={`absolute left-2 text-sm text-white nunito tracking-tight transition-all duration-500 ${
                       taskText ? "-top-5" : "top-0 opacity-0"
                     }`}
                   >
                     Writing stuff will make it happen
                   </label>
                   <label
-                    className={`absolute left-3 text-md text-gray-700 transition-all top-3 ${
+                    className={`absolute left-3 text-md text-gray-700 transition-all nunito tracking-tight top-3 ${
                       taskText ? "hidden" : ""
                     }`}
                   >
@@ -100,7 +100,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                     value={taskText}
                     onChange={(e) => setTaskText(e.target.value)}
                     onKeyPress={(e) => handleKeyPress(e, "taskbgCol")}
-                    className="p-2 w-full h-28 text-start rounded-md border-2 border-gray-300 bg-slate-200"
+                    className="p-2 w-full h-28 text-start focus:border-blue-500 outline-none rounded-md border-2 border-gray-300 bg-slate-100"
                   />
                 </div>
                 <input type="hidden" id="taskbgCol" name="taskbgCol" value="" />

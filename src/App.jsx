@@ -14,7 +14,7 @@ export default function App() {
   }, [dispatch]);
   const isDarkmode = useSelector(state => state.tasks.darkMode);
   return (
-    <section className={` w-screen h-screen overflow-x-hidden ${isDarkmode?"bg-bg1 text-white border-white":""} transition-all`}>
+    <section className={` w-screen h-screen overflow-x-hidden  ${isDarkmode?"bg-bg1 text-white border-white":""} transition-all`}>
       <Navbar />
       <AddTask />
       <FilterSelect/>

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { CheckSquareOffset, X, XCircle, CheckCircle } from "@phosphor-icons/react";
 import { isCompleteTask } from '../Global_state-redux/TaskActions';
 
-const NOTIFICATION_TTL = 2500; // Time-to-live for notifications in milliseconds
+const NOTIFICATION_TTL = 3000; // Time-to-live for notifications in milliseconds
 
 const SlideInNotifications = ({ initialIsCompleted, taskId, dispatch }) => {
   const [notifications, setNotifications] = useState([]);
@@ -33,9 +33,9 @@ const SlideInNotifications = ({ initialIsCompleted, taskId, dispatch }) => {
     <div className="flex items-center justify-center">
       <button onClick={handleNotificationClick} className={`transition-all ${isCompleted?"text-green-500":"text-red-500"}`}>
         {isCompleted ? (
-          <CheckCircle size={32} weight="duotone" className="hover:scale-105 transition-all" />
+          <CheckCircle size={32} weight="duotone" className="hover:scale-110 duration-700 transition-all" />
         ) : (
-          <XCircle size={32} weight="duotone" className="hover:scale-105 transition-all" />
+          <XCircle size={32} weight="duotone" className="hover:scale-110 duration-700 transition-all" />
         )}
       </button>
       <div className="flex flex-col gap-1 w-72 fixed bottom-2 right-2 z-50 pointer-events-none">
