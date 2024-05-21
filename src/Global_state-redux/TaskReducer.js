@@ -4,16 +4,7 @@ import {
 } from './TaskActions';
 
 const initialState = {
-  tasks: [
-    {
-      id: 0,
-      heading: "Task 0",
-      text: "Task 0 description",
-      bgCol: "DEFAULT",
-      completed: false,
-      creationTime: "19-May-2024"
-    },
-  ],
+  tasks: [],
   filter: "ALL",
   darkMode: true,
   viewState: "GRID",
