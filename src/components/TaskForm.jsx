@@ -69,13 +69,20 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                   >
                     Type an eye catchy title
                   </label>
+                  <label
+                    className={`absolute left-3.5 text-md text-gray-700 transition-all duration-100 nunito tracking-tight top-3.5 ${
+                      taskHeading ? "-translate-y-2 opacity-0 " : ""
+                    }`}
+                  >
+                    ✏️ The heading here
+                  </label>
                   <input
                     type="text"
                     name="taskHeading"
                     value={taskHeading}
                     onChange={(e) => setTaskHeading(e.target.value)}
                     onKeyPress={(e) => handleKeyPress(e, "taskText")}
-                    placeholder="✏️ The heading here"
+                    placeholder=""
                     className="px-2 py-3 w-full rounded-md border-2 border-gray-300 focus:border-blue-500 outline-none placeholder:text-gray-700 placeholder:text-md bg-slate-100"
                   />
                 </div>
@@ -88,8 +95,8 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                     Writing stuff will make it happen
                   </label>
                   <label
-                    className={`absolute left-3 text-md text-gray-700 transition-all nunito tracking-tight top-3 ${
-                      taskText ? "hidden" : ""
+                    className={`absolute left-3.5 text-md text-gray-700 transition-all duration-100 nunito tracking-tight top-3.5 ${
+                      taskText ? "-translate-y-2 opacity-0 " : ""
                     }`}
                   >
                     📝 Your To-Do here...
@@ -102,7 +109,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                     value={taskText}
                     onChange={(e) => setTaskText(e.target.value)}
                     onKeyPress={(e) => handleKeyPress(e, "taskbgCol")}
-                    className="w-full p-3 h-28 align-top text-left focus:border-blue-500 outline-none rounded-md border-2 border-gray-300 bg-slate-100 overflow-wrap break-word text-wrap"
+                    className="w-full p-2.5 pt-3 h-28 align-top text-left focus:border-blue-500 outline-none rounded-md border-2 border-gray-300 bg-slate-100 overflow-wrap break-word text-wrap"
                   />
                 </div>
                 <input type="hidden" id="taskbgCol" name="taskbgCol" value="" />
