@@ -17,7 +17,7 @@ export default function Navbar() {
             isDarkmode ? "text-w1" : "text-zinc-900"
           } roboto-condensed transition-all ease-out duration-700 `}
         >
-          Welcome!
+          ToDo Nest
         </h6>
         <DarkModeToggle />
       </div>

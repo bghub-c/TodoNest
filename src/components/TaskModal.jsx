@@ -87,10 +87,10 @@ const TaskModal = ({ task, setSelectedTask }) => {
           !isDarkmode ? "bg-white/95 text-bg1" : "bg-bg1/95 text-w1"
         }`}
       ><span>
-        <h1 className="text-xl font-bold mb-2">{task.heading}</h1>
-        <h2 className="text-sm text-gray-500 mb-4">{`${task.creationTime.datePart} at ${task.creationTime.timePart}`}</h2>
+        <h1 className="text-2xl font-bold mb-2 roboto-condensed tracking-wider">{task.heading}</h1>
+        <h2 className="text-xs text-gray-500 mb-4 ml-2 tracking-tight">{`${task.creationTime.datePart} at ${task.creationTime.timePart}`}</h2>
         <div className="overflow-y-auto overflow-x-hidden mb-4 w-full h-52">
-          <p>{task.text}</p>
+          <p className="quicksand tracking-wide">{task.text}</p>
         </div></span>
         <div className="flex justify-between items-center mt-8">
           <div className="flex items-center">

@@ -97,19 +97,19 @@ const Tasks = () => {
                     onClick={() => setSelectedTask(task)}
                   >
                     <span className="block mb-4">
-                      <h1 className="text-2xl tracking-wide font-bold">
+                      <h1 className="text-2xl tracking-wider font-semibold roboto-condensed">
                         {task.heading}
                       </h1>
                       <h2
-                        className={`text-sm ml-1 flex tracking-tighter ${
+                        className={`text-xs ml-1 flex tracking-tighter ${
                           isDarkmode ? "text-gray-100" : "text-bg1"
-                        } transition-all ease-out duration-300`}
+                        } transition-all ease-out duration-300 roboto-condensed`}
                       >
                         {task.creationTime.datePart}
                       </h2>
                     </span>
                     <p
-                      className={`text-wrap max-h-8 overflow-wrap break-word font-medium text-md ${
+                      className={`text-wrap max-h-8 overflow-wrap break-word font-medium text-md quicksand ${
                         task.completed ? "line-through" : ""
                       }`}
                     >

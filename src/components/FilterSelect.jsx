@@ -24,7 +24,7 @@ const FilterSelect = () => {
   return (
     <section className="h-12 px-5 w-screen flex items-center justify-between">
       <select
-        className={`h-fit w-fit py-2 text-sm tracking-tighter rounded-lg focus:outline-none uppercase pr-3 pl-1 ${isDarkmode?"text-bg1":"text-black bg-black/10"} transition-all ease-out duration-700`}
+        className={`h-fit w-fit py-2 text-sm tracking-tighter nunito rounded-lg focus:outline-none uppercase pr-3 pl-1 ${isDarkmode?"text-bg1":"text-black bg-black/10"} transition-all ease-out duration-700`}
         value={currentFilter}
         onChange={(e) => handleFilter(e.target.value)}
       >
