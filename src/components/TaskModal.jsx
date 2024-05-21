@@ -99,8 +99,9 @@ const TaskModal = ({ task, setSelectedTask }) => {
                 <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
                   <Palette
                     onClick={() => setpalettExpanded(true)}
+                    weight="duotone"
                     size={34}
-                    className="cursor-pointer"
+                    className="cursor-pointer text-yellow-800"
                   />
                 </motion.span>
               )}
