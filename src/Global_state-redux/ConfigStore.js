@@ -1,13 +1,13 @@
-import { configureStore } from "@reduxjs/toolkit";
-import taskReducer from "./TaskReducer";
+import { configureStore } from '@reduxjs/toolkit';
+import {thunk} from 'redux-thunk';
+import taskReducer from './TaskReducer';
 
-const configStore = () => {
-  return configureStore({
-    reducer: {
-      tasks: taskReducer,
-    },
-    devTools: true, // For Redux DevTools extension
-  });
-};
+const store = configureStore({
+  reducer: {
+    tasks: taskReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+  devTools: true, // Enable Redux DevTools extension
+});
 
-export default configStore;
+export default store;
