@@ -38,7 +38,7 @@ const SlideInNotifications = ({ initialIsCompleted, taskId, dispatch }) => {
           <XCircle size={32} weight="duotone" className="hover:scale-110 duration-700 transition-all" />
         )}
       </button>
-      <div className="flex flex-col gap-1 w-72 fixed bottom-2 right-2 z-50 pointer-events-none">
+      <div className="absolute flex flex-col gap-1 w-72  -bottom-56 right-1 z-50 pointer-events-none">
         <AnimatePresence>
           {notifications.map((n) => (
             <Notification removeNotif={removeNotif} {...n} key={n.id} />
@@ -65,7 +65,7 @@ const Notification = ({ text, id, removeNotif }) => {
       animate={{ y: 0, scale: 1 }}
       exit={{ x: "100%", opacity: 0 }}
       transition={{ duration: 0.35, ease: "easeOut" }}
-      className="text-white p-2 flex items-start rounded gap-2 text-sm font-medium shadow-lg bg-black/20 backdrop-blur-xl pointer-events-auto"
+      className="  text-white p-2 flex items-start rounded gap-2 text-sm font-medium shadow-lg bg-black/20 backdrop-blur-xl pointer-events-auto"
     >
       <CheckSquareOffset size={20} weight="duotone" />
       <span>{text}</span>

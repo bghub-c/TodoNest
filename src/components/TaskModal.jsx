@@ -122,7 +122,7 @@ const TaskModal = ({ task, setSelectedTask }) => {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.15 }}
-        className={`z-50 relative flex flex-col justify-between rounded-md max-w-md w-96 laptop:w-[550px] h-fit laptop:h-[450px] p-2 pt-6 px-6 border ${borderColor} ${
+        className={`z-50 relative flex flex-col justify-between rounded-md max-w-md w-96 backdrop-brightness-50 laptop:w-[550px] h-fit laptop:h-[450px] p-2 pt-6 px-6 border ${borderColor} ${
           !isDarkmode ? "bg-white/95 text-bg1" : "bg-bg1/95 text-w1"
         }`}
       >

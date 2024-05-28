@@ -1,0 +1,2351 @@
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\AddTask.jsx
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Plus } from "@phosphor-icons/react";
+import TaskForm from "./TaskForm";
+import { AnimatePresence } from "framer-motion";
+
+const AddTask = () => {
+  const [isClicked, setIsClicked] = useState(false);
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+
+  return (
+    <>
+      <AnimatePresence>{isClicked && <TaskForm isClicked={isClicked} setIsClicked={setIsClicked} />}</AnimatePresence>
+      <section className="w-screen flex items-center justify-between text-5xl roboto-condensed font-thin tracking-tighter px-5 py-3 transition-all ease-in-out">
+        <h1>Your Tasks</h1>
+        <button
+          onClick={() => setIsClicked(!isClicked)}
+          className={`p-3 border-2 rounded-xl ${
+            isDarkmode
+              ? "hover:bg-white hover:text-bg1 hover:border-black"
+              : "hover:bg-bg1 hover:text-white hover:border-white"
+          } hover:shadow-lg shadow-white transition-all ease-out`}
+        >
+          <Plus size={25} weight="regular" />
+        </button>
+      </section>
+    </>
+  );
+};
+
+export default AddTask;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\ColorButtons.jsx
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+export default function ColorButtons({func, buttonVal}){
+  const [tapped, setTapped]=useState(buttonVal);
+  useEffect(() => {
+    setTapped(buttonVal);
+  }, [buttonVal]);
+    return(
+        <motion.div
+        initial={{x:-100, opacity:0}}
+        animate={{x:0, opacity:1}}
+        exit={{x:-100, opacity:0}}
+        transition={{duration:0.25, ease:"backInOut"}}
+        id="button_container"
+        className="flex items-center gap-2 smartphone:flex-row "
+      >
+        <button
+          type="button"
+          onClick={() => {func(`default`)
+            setTapped(1);}
+          }
+          className={`px-3 py-1 rounded-md  bg-w1 ring-black text-gray-800 hover:ring-2 focus:ring-2 ${tapped===1?"ring-1 scale-105 shadow-white/20":""} focus:scale-105 transition-all shadow-lg focus:shadow-white/20 hover:shadow-white/20`}
+        >
+          Default
+        </button>
+        <button
+          type="button"
+          onClick={() => {func("AzureBreeze"); setTapped(2)}}
+          className={`w-5 h-5 rounded-full bg-c1lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===2?"ring-1 scale-105 shadow-c1":""} focus:scale-105 transition-all  ring-c1lt shadow-lg focus:shadow-c1`}
+        ></button>
+        <button
+          type="button"
+          onClick={() => {func("MeadowMist"); setTapped(3)}}
+          className={`w-5 h-5 rounded-full bg-c2lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===3?"ring-1 scale-105 shadow-c2/50":""} focus:scale-105 transition-all ring-c2lt shadow-lg focus:shadow-c2/50` }
+        ></button>
+        <button
+          type="button"
+          onClick={() => {func("PeachyBlush"); setTapped(4)}}
+          className={`w-5 h-5 rounded-full bg-c3lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===4?"ring-1 scale-105 shadow-c3/50":""} focus:scale-105 transition-all ring-c3lt shadow-lg focus:shadow-c3/50`}
+        ></button>
+        <button
+          type="button"
+          onClick={() => {func("LavenderHaze"); setTapped(5)}}
+          className={` w-5 h-5 rounded-full bg-c4lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===5?"ring-1 scale-105 shadow-c4/50":""} focus:scale-105 transition-all ring-c4 shadow-lg focus:shadow-c4/50 `}
+        ></button>
+        <button
+          type="button"
+          onClick={() =>{ func("CoralCrush"); setTapped(6)}}
+          className={`w-5 h-5 rounded-full bg-c5lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===6?"ring-1 scale-105 shadow-c5/50":""} focus:scale-105 transition-all ring-c5 shadow-lg focus:shadow-c5/50`}
+        ></button>
+        <button
+          type="button"
+          onClick={() => {func("MintWhisper"); setTapped(7)}}
+          className={` w-5 h-5 rounded-full bg-c6lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===7?"ring-1 scale-105 shadow-c6/50":""} focus:scale-105 transition-all ring-c6lt shadow-lg focus:shadow-c6/50 `}
+        ></button>
+      </motion.div>
+    )
+}
+ColorButtons.propTypes = {
+    func: PropTypes.func.isRequired,
+    buttonVal: PropTypes.number.isRequired
+  };
+  
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\FilterSelect.jsx
+import { useDispatch, useSelector } from "react-redux";
+import { FilterTask, ViewState } from "../Global_state-redux/TaskActions"; // Import viewState action creator
+import { useState } from "react";
+import { ListBullets, SquaresFour } from "@phosphor-icons/react";
+
+const FilterSelect = () => {
+  // Components that filter Tasks
+  const dispatch = useDispatch();
+  const currentFilter = useSelector((state) => state.tasks.filter);
+  const isDarkmode = useSelector(state => state.tasks.darkMode);
+  const [viewState, setViewState] = useState(
+    useSelector((state) => state.tasks.viewState)
+  ); 
+  const handleFilter = (filter) => {
+    dispatch(FilterTask(filter));
+  };
+
+  const handleViewState = (view) => {
+    dispatch(ViewState(view));
+    setViewState(view);
+  };
+
+  return (
+    <section className="h-12 px-5 w-screen flex items-center justify-between">
+      <select
+        className={`h-fit w-fit py-2 text-sm tracking-tighter nunito rounded-lg focus:outline-none uppercase pr-3 pl-1 ${isDarkmode?"text-bg1":"text-black bg-black/10"} transition-all ease-out duration-700`}
+        value={currentFilter}
+        onChange={(e) => handleFilter(e.target.value)}
+      >
+        <option value="ALL">Default</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="INCOMPLETE">Incomplete</option>
+      </select>
+      <span className="h-full flex gap-2 mr-3">
+        <button value="GRID" onClick={() => handleViewState("GRID")} className={` hover:scale-110 transition-all ease-out duration-700`}>
+        <SquaresFour size={33} weight={`${viewState==="GRID"?"fill":"light"}`} />
+        </button>
+        <button value="LIST" onClick={() => handleViewState("LIST")} className={` hover:scale-110 transition-all ease-out duration-700`}>
+        <ListBullets size={33} weight={`${viewState==="LIST"?"fill":"light"}`} />
+        </button>
+      </span>
+    </section>
+  );
+};
+export default FilterSelect;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\Futter.jsx
+import {  ArrowCircleUpRight } from "@phosphor-icons/react";
+import { useSelector } from "react-redux";
+
+export default function Futter() {
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <section
+      className={`mt-4 z-10 pt-1 pb-0 w-full flex fixed bottom-0 justify-center backdrop-blur ${
+        isDarkmode ? "bg-bg1/70 text-white" : "bg-white/70 text-black"
+      } roboto-condensed`}
+    >
+      <p className="flex items-center">
+        Copyrights
+        <a
+          href="https://webweaver-personalportfolio.netlify.app/"
+          className={`group font-semibold mx-2 flex items-center transition-all duration-300`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Webweaver
+          <ArrowCircleUpRight size={18} weight="duotone" className="ml-1 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all ease-in-out duration-300" />
+        </a>
+        &copy; {currentYear}
+      </p>
+    </section>
+  );
+}
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\Navbar.jsx
+import { useDispatch, useSelector } from "react-redux";
+import { darkMode } from "../Global_state-redux/TaskActions";
+import { useState } from "react";
+import { Moon, Sun } from "@phosphor-icons/react";
+
+export default function Navbar() {
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  return (
+    <nav
+      className={` w-screen h-fit z-20 sticky top-0 text-5xl backdrop-blur-xl ${
+        isDarkmode ? "backdrop-brightness-75" : "bg-slate-100"
+      } transition-all ease-out`}
+    >
+      <div className="w-screen flex justify-between items-center px-8 py-3">
+        <h6
+          className={`text-sm smartphone:text-lg font-medium group-hover:tracking-widest ${
+            isDarkmode ? "text-w1" : "text-zinc-900"
+          } roboto-condensed transition-all ease-out duration-700 `}
+        >
+          ToDo Nest
+        </h6>
+        <DarkModeToggle />
+      </div>
+    </nav>
+  );
+}
+
+const DarkModeToggle = () => {
+  const [toggled, setToggled] = useState(true);
+  const dispatch = useDispatch();
+
+  const toggleDarkMode = () => {
+    setToggled(!toggled);
+    dispatch(darkMode(!toggled));
+  };
+
+  return (
+    <div
+      onClick={toggleDarkMode}
+      className={`w-10 h-6 p-0.5 flex items-center rounded-full transition-all ease-in-out ${
+        toggled ? "bg-w1" : "bg-zinc-900"
+      }`}
+    >
+      <div
+        className={`w-5 h-5 p-0.5 flex items-center justify-center rounded-full transition-all duration-150 ease-out ${
+          toggled ? "translate-x-4 bg-zinc-900" : " bg-w1"
+        }`}
+      >
+        {!toggled ? (
+          <Sun size={"100%"} weight="duotone" />
+        ) : (
+          <Moon size={"100%"} weight="duotone" />
+        )}
+      </div>
+    </div>
+  );
+};
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\SlideInNotifications.jsx
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import PropTypes from "prop-types";
+import { CheckSquareOffset, X, XCircle, CheckCircle } from "@phosphor-icons/react";
+import { isCompleteTask } from '../Global_state-redux/TaskActions';
+
+const NOTIFICATION_TTL = 3000; // Time-to-live for notifications in milliseconds
+
+const SlideInNotifications = ({ initialIsCompleted, taskId, dispatch }) => {
+  const [notifications, setNotifications] = useState([]);
+  const [isCompleted, setIsCompleted] = useState(initialIsCompleted);
+
+  const removeNotif = (id) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+  };
+
+  const generateNotificationText = (isCompleted) => {
+    return isCompleted ? "Task is marked as complete" : "Task is marked as incomplete";
+  };
+
+  const handleNotificationClick = () => {
+    const newCompletedStatus = !isCompleted;
+    setIsCompleted(newCompletedStatus);
+    dispatch(isCompleteTask({ id: taskId, isCompleted: newCompletedStatus }));
+
+    setNotifications((prev) => [
+      { id: Math.random(), text: generateNotificationText(newCompletedStatus) },
+      ...prev,
+    ]);
+  };
+
+  return (
+    <div className="flex items-center justify-center">
+      <button onClick={handleNotificationClick} className={`transition-all ${isCompleted?"text-green-500":"text-red-500"}`}>
+        {isCompleted ? (
+          <CheckCircle size={32} weight="duotone" className="hover:scale-110 duration-700 transition-all" />
+        ) : (
+          <XCircle size={32} weight="duotone" className="hover:scale-110 duration-700 transition-all" />
+        )}
+      </button>
+      <div className="flex flex-col gap-1 w-72 fixed bottom-2 right-2 z-50 pointer-events-none">
+        <AnimatePresence>
+          {notifications.map((n) => (
+            <Notification removeNotif={removeNotif} {...n} key={n.id} />
+          ))}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+};
+
+const Notification = ({ text, id, removeNotif }) => {
+  useEffect(() => {
+    const timeoutRef = setTimeout(() => {
+      removeNotif(id);
+    }, NOTIFICATION_TTL);
+
+    return () => clearTimeout(timeoutRef);
+  }, [id, removeNotif]);
+
+  return (
+    <motion.div
+      layout
+      initial={{ y: -15, scale: 0.95 }}
+      animate={{ y: 0, scale: 1 }}
+      exit={{ x: "100%", opacity: 0 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className="absolute -bottom-58 text-white p-2 flex items-start rounded gap-2 text-sm font-medium shadow-lg bg-black/20 backdrop-blur-xl pointer-events-auto"
+    >
+      <CheckSquareOffset size={20} weight="duotone" />
+      <span>{text}</span>
+      <button onClick={() => removeNotif(id)} className="ml-auto mt-0.5">
+        <X size={20} weight="bold" />
+      </button>
+    </motion.div>
+  );
+};
+
+SlideInNotifications.propTypes = {
+  initialIsCompleted: PropTypes.bool.isRequired,
+  taskId: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
+Notification.propTypes = {
+  text: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  removeNotif: PropTypes.func.isRequired,
+};
+
+export default SlideInNotifications;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\TaskForm.jsx
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { addTask } from "../Global_state-redux/TaskActions";
+import PropTypes from "prop-types";
+import ColorButtons from "./ColorButtons";
+const TaskForm = ({ isClicked, setIsClicked }) => {
+  const dispatch = useDispatch();
+  const [taskHeading, setTaskHeading] = useState("");
+  const [taskText, setTaskText] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const taskHeading = formData.get("taskHeading");
+    const taskText = formData.get("taskText");
+    const taskbgCol = formData.get("taskbgCol");
+    if (taskText.trim() !== "") {
+      dispatch(addTask(taskText, taskHeading, taskbgCol));
+      setIsClicked(false);
+    }
+  };
+
+  const handleButtonClick = (color) => {
+    //setborderCol(calculateColor(color, isDarkmode));
+    document.getElementById("taskbgCol").value = color;
+  };
+
+  const handleKeyPress = (e, nextField) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      document.getElementById(nextField).focus();
+    }
+  };
+
+  return (
+    <>
+      {isClicked && (
+        <>
+          <section className="absolute top-0 z-30 w-screen h-screen flex items-center justify-center text-gray-900">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              onClick={() => setIsClicked(false)}
+              className={`z-10 w-full h-full backdrop-blur bg-black/70  absolute`}
+            ></motion.div>
+            <motion.div
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className={`z-20 w-fit bg-bg1 grid place-content-center p-6 rounded-lg shadow-2xl shadow-black/60 border `}
+            >
+              <p className="text-4xl tracking-tighter roboto-condensed my-1 mb-20 laptop:mb-8 text-slate-200">
+                Let&apos;s craft a new to-do!🚀
+              </p>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-7">
+                <div className="relative z-10">
+                  <label
+                    className={`absolute left-2  text-sm text-white nunito tracking-tight transition-all ease-in-out duration-500 ${
+                      taskHeading ? "-top-5" : "top-0 opacity-0"
+                    }`}
+                  >
+                    Type an eye catchy title
+                  </label>
+                  <label
+                    className={`absolute left-3.5 text-md text-gray-700 transition-all duration-100 nunito tracking-tight top-3.5 ${
+                      taskHeading ? "-translate-y-2 opacity-0 " : ""
+                    }`}
+                  >
+                    ✏️ The heading here
+                  </label>
+                  <input
+                    type="text"
+                    name="taskHeading"
+                    value={taskHeading}
+                    onChange={(e) => setTaskHeading(e.target.value)}
+                    onKeyPress={(e) => handleKeyPress(e, "taskText")}
+                    placeholder=""
+                    className="px-2 py-3 w-full rounded-md border-2 border-gray-300 focus:border-blue-500 outline-none placeholder:text-gray-700 placeholder:text-md bg-slate-100"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <label
+                    className={`absolute left-2 text-sm text-white nunito tracking-tight transition-all duration-500 ${
+                      taskText ? "-top-5" : "top-0 opacity-0"
+                    }`}
+                  >
+                    Writing stuff will make it happen
+                  </label>
+                  <label
+                    className={`absolute left-3.5 text-md text-gray-700 transition-all duration-100 nunito tracking-tight top-3.5 ${
+                      taskText ? "-translate-y-2 opacity-0 " : ""
+                    }`}
+                  >
+                    📝 Your To-Do here...
+                  </label>
+                  
+                  <textarea
+                  id="textinput"
+                    type="text"
+                    name="taskText"
+                    value={taskText}
+                    onChange={(e) => setTaskText(e.target.value)}
+                    onKeyPress={(e) => handleKeyPress(e, "taskbgCol")}
+                    className="w-full p-2.5 pt-3 h-28 align-top text-left focus:border-blue-500 outline-none rounded-md border-2 border-gray-300 bg-slate-100 overflow-wrap break-word text-wrap"
+                  />
+                </div>
+                <input type="hidden" id="taskbgCol" name="taskbgCol" value="" />
+                <div className="flex gap-4 items-center">
+                  <ColorButtons func={handleButtonClick}/>
+                </div>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                >
+                  Add task
+                </button>
+              </form>
+            </motion.div>
+          </section>
+        </>
+      )}
+    </>
+  );
+};
+
+TaskForm.propTypes = {
+  isClicked: PropTypes.bool.isRequired,
+  setIsClicked: PropTypes.func.isRequired,
+};
+
+export default TaskForm;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\TaskModal.jsx
+import SlideInNotifications from "./SlideInNotifications";
+import { Palette, Trash } from "@phosphor-icons/react";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTaskColor, deleteTask } from "../Global_state-redux/TaskActions";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import ColorButtons from "./ColorButtons";
+
+const calculateColor = (color, isDarkmode) => {
+  if (!isDarkmode) {
+    switch (color) {
+      case "AzureBreeze":
+        return "border-c1";
+      case "MeadowMist":
+        return "border-c2";
+      case "PeachyBlush":
+        return "border-c3";
+      case "LavenderHaze":
+        return "border-c4";
+      case "CoralCrush":
+        return "border-c5";
+      case "MintWhisper":
+        return "border-c6";
+      default:
+        return "border border-black/20";
+    }
+  } else {
+    switch (color) {
+      case "AzureBreeze":
+        return "border-c1lt";
+      case "MeadowMist":
+        return "border-c2lt";
+      case "PeachyBlush":
+        return "border-c3lt";
+      case "LavenderHaze":
+        return "border-c4lt";
+      case "CoralCrush":
+        return "border-c5lt";
+      case "MintWhisper":
+        return "border-c6lt";
+      default:
+        return "border border-w1/30";
+    }
+  }
+};
+
+const TaskModal = ({ task, setSelectedTask }) => {
+  const [palettExpanded, setpalettExpanded] = useState(false);
+  const [borderColor, setBorderColor] = useState("");
+  const [buttonValue, setButtonValue] = useState(1);
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const borderClass = calculateColor(task.bgCol, isDarkmode);
+    setBorderColor(borderClass);
+    setButtonValue(() => {
+      switch (task.bgCol) {
+        case "AzureBreeze":
+          return 2;
+        case "MeadowMist":
+          return 3;
+        case "PeachyBlush":
+          return 4;
+        case "LavenderHaze":
+          return 5;
+        case "CoralCrush":
+          return 6;
+        case "MintWhisper":
+          return 7;
+        default:
+          return 1;
+      }
+    })
+  }, [task.bgCol, isDarkmode, task]);
+
+  const handleColorChange = (color) => {
+    const borderClass = calculateColor(color, isDarkmode);
+    setBorderColor(borderClass);
+    setButtonValue(() => {
+      switch (color) {
+        case "AzureBreeze":
+          return 2;
+        case "MeadowMist":
+          return 3;
+        case "PeachyBlush":
+          return 4;
+        case "LavenderHaze":
+          return 5;
+        case "CoralCrush":
+          return 6;
+        case "MintWhisper":
+          return 7;
+        default:
+          return 1;
+      }
+    })
+    dispatch(changeTaskColor(task.id, color));
+    setpalettExpanded(false); // Close palette after color selection
+  };
+
+  const handleDeleteTask = (taskId) => {
+    dispatch(deleteTask(taskId));
+    setSelectedTask(null);
+  };
+
+  if (!task) return null;
+
+  return (
+    <section className="fixed inset-0 z-30 grid place-content-center bg-black/60 backdrop-blur-sm">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.1 }}
+        onClick={() => setSelectedTask(null)}
+        className="absolute w-full h-full"
+      ></motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.15 }}
+        className={`z-50 relative flex flex-col justify-between rounded-md max-w-md w-96 backdrop-brightness-50 laptop:w-[550px] h-fit laptop:h-[450px] p-2 pt-6 px-6 border ${borderColor} ${
+          !isDarkmode ? "bg-white/95 text-bg1" : "bg-bg1/95 text-w1"
+        }`}
+      >
+        <span>
+          <h1 className="text-2xl font-bold mb-2 roboto-condensed tracking-wider">{task.heading}</h1>
+          <h2 className="text-xs text-gray-500 mb-4 ml-1 tracking-tighter">{`${task.creationTime.datePart} at ${task.creationTime.timePart}`}</h2>
+          <div className="overflow-y-auto overflow-x-hidden mb-4 w-full h-52">
+            <p className="quicksand font-medium tracking-wide">{task.text}</p>
+          </div>
+        </span>
+        <div className="flex justify-between items-center mt-8">
+          <div className="flex items-center my-1">
+            <AnimatePresence>
+              {!palettExpanded && (
+                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <Palette
+                    onClick={() => setpalettExpanded(true)}
+                    weight="duotone"
+                    size={34}
+                    className={`cursor-pointer ${isDarkmode ? "text-yellow-600" : "text-yellow-500"} hover:scale-105 transition-all duration-700`}
+                  />
+                </motion.span>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {palettExpanded && <ColorButtons func={handleColorChange} buttonVal={buttonValue} />}
+            </AnimatePresence>
+          </div>
+          <div className="flex items-center space-x-2">
+            <SlideInNotifications
+              initialIsCompleted={task.completed}
+              taskId={task.id}
+              dispatch={dispatch}
+            />
+            <Trash
+              onClick={() => handleDeleteTask(task.id)}
+              size={32}
+              weight="duotone"
+              className="hover:scale-105 transition-all cursor-pointer"
+            />
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+TaskModal.propTypes = {
+  task: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    bgCol: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    heading: PropTypes.string.isRequired,
+    creationTime: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }),
+  setSelectedTask: PropTypes.func.isRequired,
+};
+
+export default TaskModal;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\Tasks.jsx
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
+import TaskModal from "./TaskModal";
+import {
+  Smiley,
+  SmileyBlank,
+  SmileyMelting,
+  SmileyXEyes,
+} from "@phosphor-icons/react";
+import { fetchTasks } from "../Global_state-redux/TaskActions";
+
+const Tasks = () => {
+  const dispatch = useDispatch();
+  const [selectedTask, setSelectedTask] = useState(null);
+  const state = useSelector((state) => state.tasks);
+  const tasks = state.tasks;
+  const currentFilter = state.filter;
+  const viewState = state.viewState;
+  useEffect(() => {
+    dispatch(fetchTasks()); // Dispatch fetchTasks action only once when component mounts
+  }, [dispatch]);
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  const calculateColor = (color) => {
+    if (!isDarkmode) {
+      switch (color) {
+        case "AzureBreeze":
+          return "bg-c1";
+        case "MeadowMist":
+          return "bg-c2";
+        case "PeachyBlush":
+          return "bg-c3";
+        case "LavenderHaze":
+          return "bg-c4";
+        case "CoralCrush":
+          return "bg-c5";
+        case "MintWhisper":
+          return "bg-c6";
+        default:
+          return "border border-black/20";
+      }
+    } else {
+      switch (color) {
+        case "AzureBreeze":
+          return "bg-c1lt";
+        case "MeadowMist":
+          return "bg-c2lt";
+        case "PeachyBlush":
+          return "bg-c3lt";
+        case "LavenderHaze":
+          return "bg-c4lt";
+        case "CoralCrush":
+          return "bg-c5lt";
+        case "MintWhisper":
+          return "bg-c6lt";
+        default:
+          return "border border-w1/30";
+      }
+    }
+  };
+  const filteredTasks = Array.isArray(tasks)
+    ? tasks.filter((task) => {
+        if (currentFilter === "ALL") return true;
+        if (currentFilter === "COMPLETED") return task.completed;
+        if (currentFilter === "INCOMPLETE") return !task.completed;
+        return true;
+      })
+    : [];
+
+  const containerClasses =
+    viewState === "LIST" ? "flex flex-col" : "grid grid-cols-2";
+
+  return (
+    <div className="h-fit flex justify-center items-center">
+      <AnimatePresence>
+        {filteredTasks.length ? (
+          <>
+            <motion.ul
+              initial={{ opacity: 0,  }}
+              animate={{ opacity: 1,  }}
+              exit={{ opacity: 0, }}
+              transition={{ type:"spring", duration: 0.5 }}
+              className={`w-11/12 gap-3 smartphone:gap-2 p-2 ${containerClasses}`}
+            >
+              {filteredTasks
+                .map((task, index) => (
+                  <motion.li
+                    layout
+                    key={index}
+                    initial={{ opacity: 0, scale:0.5 }}
+                    animate={{ opacity: 1, scale:1}}
+                    exit={{ opacity: 0, scale:0.5}}
+                    transition={{ type:"spring", duration: 0.5 }}
+                    className={`relative rounded-md p-4  shadow-lg ${calculateColor(
+                      task.bgCol
+                    )} transition-colors ease-out duration-300 overflow-hidden max-h-30 text-nowrap smartphone:min-h-20 cursor-pointer hover:shadow-2xl ${isDarkmode?"hover:shadow-white/10":"hover:shadow-bg1/30"}`}
+                    onClick={() => setSelectedTask(task)}
+                  >
+                    <span className="block mb-4">
+                      <h1 className="text-2xl tracking-wider font-semibold roboto-condensed">
+                        {task.heading}
+                      </h1>
+                      <h2
+                        className={`text-xs ml-1 flex tracking-tighter ${
+                          isDarkmode ? "text-gray-100" : "text-bg1"
+                        } transition-all ease-out duration-300 roboto-condensed`}
+                      >
+                        {task.creationTime.datePart}
+                      </h2>
+                    </span>
+                    <p
+                      className={`text-wrap max-h-8 overflow-wrap break-word font-medium text-md quicksand ${
+                        task.completed ? "line-through" : ""
+                      }`}
+                    >
+                      {task.text}
+                      {task.text.length>100&& <span className={`absolute bottom-1 right-8 px-6  ${calculateColor(task.bgCol)} text-xl`}>..</span>}
+                    </p>
+                  </motion.li>
+                ))
+                .reverse()}
+            </motion.ul>
+            <AnimatePresence>
+              {selectedTask && (
+                <TaskModal
+                  task={selectedTask}
+                  setSelectedTask={setSelectedTask}
+                  colorfunc={calculateColor}
+                />
+              )}
+            </AnimatePresence>
+          </>
+        ) : (
+          <div className="text-2xl tracking-tight h-full w-full flex smartphone:flex-col items-center justify-center text-center gap-1 mt-36 nunito">
+            <AnimatePresence>
+              {currentFilter !== "ALL" && (
+                <>
+                  {currentFilter === "COMPLETED" ? (
+                    <motion.div className="flex smartphone:flex-col items-center justify-center text-center gap-1"
+                     initial={{ opacity: 0,  }}
+                    animate={{ opacity: 1,  }}
+                    exit={{ opacity: 0 }}>
+                      <SmileyXEyes
+                        size={"100%"}
+                        className="text-yellow-400 w-14 laptop:w-28 "
+                        weight="duotone"
+                      />
+                      Looks like you haven&apos;t completed any tasks yet!
+                      <br />
+                      {"(Or haven't added any)"}
+                    </motion.div>
+                  ) : (
+                    <motion.div className="flex smartphone:flex-col items-center justify-center text-center gap-1" initial={{ opacity: 0, }}
+                    animate={{ opacity: 1, }}
+                    exit={{ opacity: 0 }}>
+                      <Smiley
+                        size={"100%"}
+                        className="text-yellow-400 w-14 laptop:w-28 "
+                        weight="duotone"
+                      />{" "}
+                      Yay, you have completed all the tasks <br />
+                      {"(Or haven't added any)"}
+                    </motion.div>
+                  )}
+                </>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {currentFilter === "ALL" && (
+                <AnimatePresence>
+                  {filteredTasks.length === 0 ? (
+                    <motion.div className="flex smartphone:flex-col items-center justify-center text-center gap-1" initial={{ opacity: 0,}}
+                    animate={{ opacity: 1,  }}
+                    exit={{ opacity: 0 }}>
+                      <SmileyMelting
+                        size={"100%"}
+                        className="text-yellow-400 w-14 laptop:w-28 "
+                        weight="duotone"
+                      />
+                      You haven&apos;t added any tasks yet!
+                    </motion.div>
+                  ) : (
+                    <motion.div className="flex smartphone:flex-col items-center justify-center text-center gap-1" initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}>
+                      <SmileyBlank
+                        size={"100%"}
+                        className="text-yellow-400 w-14 laptop:w-28 "
+                        weight="duotone"
+                      />
+                      Looks like you have done all the tasks!
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+export default Tasks;
+
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\WelcomePage.jsx
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
+import { ListChecks } from "@phosphor-icons/react";
+
+const Tags = ["Plan!", "Organise!", "Achieve!"];
+const tagColors = ["text-c1", "text-c6", "text-c5"];
+
+export default function WelcomePage() {
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  const [currentTag, setCurrentTag] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTag((prevTag) => (prevTag + 1) % Tags.length);
+    }, 630); 
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <motion.div initial={{  opacity: 0.7 }}
+    animate={{  opacity: 1 }}
+    exit={{  opacity: 0 }}
+      className={`flex flex-col-reverse absolute z-50 items-center justify-center h-screen w-screen bg-bg1 ${
+        isDarkmode ? " text-white" : "bg-gray-100 "
+      }`}
+    >
+      <motion.span
+        id="container"
+        className="relative mb-36 flex gap-1 items-center justify-center text-5xl quicksand font-extrabold"
+      >
+        <div>
+          <ListChecks
+            size={100}
+            weight="bold"
+            className="absolute top-0 left-0 bg-bg1 text-c1"
+          />
+        </div>
+        <motion.div initial={{x:-100, opacity:0}} animate={{x:0, opacity:1}} className="ml-24 my-7 bg-gradient-to-r from-c1 to-c3 text-transparent bg-clip-text">
+          ToDo Nest
+        </motion.div>
+      </motion.span>
+      <AnimatePresence>
+      <motion.h1
+  layout
+  key={Tags[currentTag]}
+  initial={{ scaleX: 0, opacity: 0 }}
+  animate={{ scaleX: 1, opacity: 1 }}
+  exit={{ scaleX: 0, opacity: 0 }}
+  transition={{ duration: 0.3, delay: 0.3 }} // Add delay here
+  className={`text-4xl font-bold caveat absolute ${tagColors[currentTag]}`}
+>
+  {Tags[currentTag]}
+</motion.h1>
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\Global_state-redux\ConfigStore.js
+import { configureStore } from '@reduxjs/toolkit';
+import {thunk} from 'redux-thunk';
+import taskReducer from './TaskReducer';
+
+const store = configureStore({
+  reducer: {
+    tasks: taskReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+  devTools: true, // Enable Redux DevTools extension
+});
+
+export default store;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\Global_state-redux\TaskActions.js
+import { v4 as uuidv4 } from 'uuid';
+
+// Action Types
+export const DARK_MODE = 'DARK_MODE'; 
+export const VIEW_STATE = 'VIEW_STATE';
+export const ADD_TASK = 'ADD_TASK';
+export const DELETE_TASK = 'DELETE_TASK';
+export const ISCOMPLETED_TASK = 'ISCOMPLETED_TASK';
+export const FILTER_TASK = 'FILTER_TASK';
+export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
+export const CHANGE_TASK_COLOR = 'CHANGE_TASK_COLOR';
+// Action Creators
+export const darkMode = (isOn) => ({
+  type: DARK_MODE,
+  payload: { isOn },
+});
+
+export const ViewState = (types) => ({
+  type: VIEW_STATE,
+  payload: { types },
+});
+
+export const fetchTasks = () => {
+  return async (dispatch) => {
+    try {
+      const retrievedString = localStorage.getItem("myObjectKey");
+      const retrievedObject = JSON.parse(retrievedString) || [];
+      dispatch({ type: FETCH_TASKS_SUCCESS, payload: { tasks: retrievedObject } });
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
+};
+
+const updateLocalStorage = (tasks) => {
+  localStorage.setItem("myObjectKey", JSON.stringify(tasks));
+};
+
+export const addTask = (text, heading, bgCol) => (dispatch, getState) => {
+  const formatDateTime = () => {
+    const date = new Date();
+    const months = [
+      "January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"
+    ];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+  
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const strMinutes = minutes < 10 ? '0' + minutes : minutes;
+  
+    const datePart = `${day}-${month}-${year}`;
+    const timePart = `${hours}:${strMinutes} ${ampm}`;
+    return { datePart, timePart };
+  };
+  const newTask = {
+    id: uuidv4(),
+    creationTime: formatDateTime(),
+    bgCol: bgCol,
+    text: text,
+    heading: heading,
+  };
+  dispatch({ type: ADD_TASK, payload: newTask });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+export const changeTaskColor = (taskId, newColor) => (dispatch, getState) => {
+  dispatch({
+    type: CHANGE_TASK_COLOR,
+    payload: { taskId, newColor },
+  });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+export const deleteTask = (taskId) => (dispatch, getState) => {
+  dispatch({
+    type: DELETE_TASK,
+    payload: taskId,
+  });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+export const isCompleteTask = (taskId) => (dispatch, getState) => {
+  dispatch({
+    type: ISCOMPLETED_TASK,
+    payload: taskId.id,
+  });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+export const FilterTask = (filter) => (dispatch, getState) => {
+  dispatch({
+    type: FILTER_TASK,
+    payload: filter,
+  });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\Global_state-redux\TaskReducer.js
+import {
+  ADD_TASK, DELETE_TASK, FILTER_TASK, ISCOMPLETED_TASK,
+  FETCH_TASKS_SUCCESS, DARK_MODE, VIEW_STATE, CHANGE_TASK_COLOR
+} from './TaskActions';
+
+const initialState = {
+  tasks: [],
+  filter: "ALL",
+  darkMode: true,
+  viewState: "GRID",
+};
+
+const taskReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_TASKS_SUCCESS:
+      return {
+        ...state,
+        tasks: action.payload.tasks,
+      };
+    case ADD_TASK:
+      return {
+        ...state,
+        tasks: [
+          ...state.tasks,
+          {
+            id: action.payload.id,
+            creationTime: action.payload.creationTime,
+            bgCol: action.payload.bgCol,
+            text: action.payload.text,
+            heading: action.payload.heading,
+            completed: false, // Ensure new tasks have a default 'completed' status
+          },
+        ],
+      };
+    case DELETE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.filter(task => task.id !== action.payload),
+      };
+    case FILTER_TASK:
+      return {
+        ...state,
+        filter: action.payload,
+      };
+      case ISCOMPLETED_TASK:
+  return {
+    ...state,
+    tasks: state.tasks.map(task => {
+      if (task.id === action.payload) {
+        const updatedTask = { ...task, completed: !task.completed };
+        return updatedTask;
+      }
+      else{
+        console.log(action.payload)
+        return task;
+      }
+      
+    }),
+  };
+
+    case DARK_MODE:
+      return {
+        ...state,
+        darkMode: action.payload.isOn,
+      };
+    case VIEW_STATE:
+      return {
+        ...state,
+        viewState: action.payload.types,
+      };
+    case CHANGE_TASK_COLOR:
+      return {
+        ...state,
+        tasks: state.tasks.map(task =>
+          task.id === action.payload.taskId ? { ...task, bgCol: action.payload.newColor } : task
+        ),
+      };
+    default:
+      return state;
+  }
+};
+
+export default taskReducer;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\App.jsx
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import AddTask from "./components/AddTask";
+import Futter from "./components/Futter";
+import Navbar from "./components/Navbar";
+import Tasks from "./components/Tasks";
+import FilterSelect from "./components/FilterSelect";
+import { fetchTasks } from "./Global_state-redux/TaskActions";
+import WelcomePage from "./components/WelcomePage";
+import { AnimatePresence } from "framer-motion";
+
+export default function App() {
+  const [showWelcome, setShowWelcome] = useState(true);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Show WelcomePage for 1.5 seconds
+    const timer = setTimeout(() => {
+      setShowWelcome(false);
+    }, 2200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchTasks()); // Dispatch fetchTasks action only once when component mounts
+  }, [dispatch]);
+
+  const isDarkmode = useSelector(state => state.tasks.darkMode);
+
+  return (
+    <div className="h-full relative">
+     <AnimatePresence> {showWelcome ? (
+        <WelcomePage />
+      ) : (
+        <section className={`w-screen h-screen pb-10 overflow-x-hidden flex flex-col ${isDarkmode ? "bg-bg1 text-white" : ""} transition-all`}>
+          <Navbar />
+          <AddTask />
+          <FilterSelect />
+          <Tasks />
+        </section>
+      )}</AnimatePresence>
+      <Futter />
+    </div>
+  );
+}
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\index.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.nunito{
+  font-family: "Nunito", sans-serif;
+}
+.roboto-condensed {
+  font-family: "Roboto Condensed", sans-serif;
+}
+.quicksand{
+  font-family: "Quicksand", sans-serif;
+}
+.m-plus-rounded-1c-regular {
+  font-family: "M PLUS Rounded 1c", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+.caveat{
+  font-family: "Caveat", cursive;
+}
+::-webkit-scrollbar {
+    margin: 10px 0; /* Margin from top and bottom */
+    width: 5px; /* Width of the scrollbar */
+  }
+  
+  ::-webkit-scrollbar-track {
+    margin: 30px ;/* Color of the scrollbar track */
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #2d2e35; 
+    border-radius: 5px; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Color of the scrollbar thumb on hover */
+  }
+  
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\main.jsx
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import App from './App'; // Your main application component
+import './index.css';
+import store from './Global_state-redux/ConfigStore';
+
+ReactDOM.createRoot(document.getElementById('root')).render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+);
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\AddTask.jsx
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Plus } from "@phosphor-icons/react";
+import TaskForm from "./TaskForm";
+import { AnimatePresence } from "framer-motion";
+
+const AddTask = () => {
+  const [isClicked, setIsClicked] = useState(false);
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+
+  return (
+    <>
+      <AnimatePresence>{isClicked && <TaskForm isClicked={isClicked} setIsClicked={setIsClicked} />}</AnimatePresence>
+      <section className="w-screen flex items-center justify-between text-5xl roboto-condensed font-thin tracking-tighter px-5 py-3 transition-all ease-in-out">
+        <h1>Your Tasks</h1>
+        <button
+          onClick={() => setIsClicked(!isClicked)}
+          className={`p-3 border-2 rounded-xl ${
+            isDarkmode
+              ? "hover:bg-white hover:text-bg1 hover:border-black"
+              : "hover:bg-bg1 hover:text-white hover:border-white"
+          } hover:shadow-lg shadow-white transition-all ease-out`}
+        >
+          <Plus size={25} weight="regular" />
+        </button>
+      </section>
+    </>
+  );
+};
+
+export default AddTask;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\ColorButtons.jsx
+import PropTypes from 'prop-types';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+export default function ColorButtons({func, buttonVal}){
+  const [tapped, setTapped]=useState(buttonVal);
+  useEffect(() => {
+    setTapped(buttonVal);
+  }, [buttonVal]);
+    return(
+        <motion.div
+        initial={{x:-100, opacity:0}}
+        animate={{x:0, opacity:1}}
+        exit={{x:-100, opacity:0}}
+        transition={{duration:0.25, ease:"backInOut"}}
+        id="button_container"
+        className="flex items-center gap-2 smartphone:flex-row "
+      >
+        <button
+          type="button"
+          onClick={() => {func(`default`)
+            setTapped(1);}
+          }
+          className={`px-3 py-1 rounded-md  bg-w1 ring-black text-gray-800 hover:ring-2 focus:ring-2 ${tapped===1?"ring-1 scale-105 shadow-white/20":""} focus:scale-105 transition-all shadow-lg focus:shadow-white/20 hover:shadow-white/20`}
+        >
+          Default
+        </button>
+        <button
+          type="button"
+          onClick={() => {func("AzureBreeze"); setTapped(2)}}
+          className={`w-5 h-5 rounded-full bg-c1lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===2?"ring-1 scale-105 shadow-c1":""} focus:scale-105 transition-all  ring-c1lt shadow-lg focus:shadow-c1`}
+        ></button>
+        <button
+          type="button"
+          onClick={() => {func("MeadowMist"); setTapped(3)}}
+          className={`w-5 h-5 rounded-full bg-c2lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===3?"ring-1 scale-105 shadow-c2/50":""} focus:scale-105 transition-all ring-c2lt shadow-lg focus:shadow-c2/50` }
+        ></button>
+        <button
+          type="button"
+          onClick={() => {func("PeachyBlush"); setTapped(4)}}
+          className={`w-5 h-5 rounded-full bg-c3lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===4?"ring-1 scale-105 shadow-c3/50":""} focus:scale-105 transition-all ring-c3lt shadow-lg focus:shadow-c3/50`}
+        ></button>
+        <button
+          type="button"
+          onClick={() => {func("LavenderHaze"); setTapped(5)}}
+          className={` w-5 h-5 rounded-full bg-c4lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===5?"ring-1 scale-105 shadow-c4/50":""} focus:scale-105 transition-all ring-c4 shadow-lg focus:shadow-c4/50 `}
+        ></button>
+        <button
+          type="button"
+          onClick={() =>{ func("CoralCrush"); setTapped(6)}}
+          className={`w-5 h-5 rounded-full bg-c5lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===6?"ring-1 scale-105 shadow-c5/50":""} focus:scale-105 transition-all ring-c5 shadow-lg focus:shadow-c5/50`}
+        ></button>
+        <button
+          type="button"
+          onClick={() => {func("MintWhisper"); setTapped(7)}}
+          className={` w-5 h-5 rounded-full bg-c6lt ring-offset-2 ring-offset-white hover:ring-2 focus:ring-2 ${tapped===7?"ring-1 scale-105 shadow-c6/50":""} focus:scale-105 transition-all ring-c6lt shadow-lg focus:shadow-c6/50 `}
+        ></button>
+      </motion.div>
+    )
+}
+ColorButtons.propTypes = {
+    func: PropTypes.func.isRequired,
+    buttonVal: PropTypes.number.isRequired
+  };
+  
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\FilterSelect.jsx
+import { useDispatch, useSelector } from "react-redux";
+import { FilterTask, ViewState } from "../Global_state-redux/TaskActions"; // Import viewState action creator
+import { useState } from "react";
+import { ListBullets, SquaresFour } from "@phosphor-icons/react";
+
+const FilterSelect = () => {
+  // Components that filter Tasks
+  const dispatch = useDispatch();
+  const currentFilter = useSelector((state) => state.tasks.filter);
+  const isDarkmode = useSelector(state => state.tasks.darkMode);
+  const [viewState, setViewState] = useState(
+    useSelector((state) => state.tasks.viewState)
+  ); 
+  const handleFilter = (filter) => {
+    dispatch(FilterTask(filter));
+  };
+
+  const handleViewState = (view) => {
+    dispatch(ViewState(view));
+    setViewState(view);
+  };
+
+  return (
+    <section className="h-12 px-5 w-screen flex items-center justify-between">
+      <select
+        className={`h-fit w-fit py-2 text-sm tracking-tighter nunito rounded-lg focus:outline-none uppercase pr-3 pl-1 ${isDarkmode?"text-bg1":"text-black bg-black/10"} transition-all ease-out duration-700`}
+        value={currentFilter}
+        onChange={(e) => handleFilter(e.target.value)}
+      >
+        <option value="ALL">Default</option>
+        <option value="COMPLETED">Completed</option>
+        <option value="INCOMPLETE">Incomplete</option>
+      </select>
+      <span className="h-full flex gap-2 mr-3">
+        <button value="GRID" onClick={() => handleViewState("GRID")} className={` hover:scale-110 transition-all ease-out duration-700`}>
+        <SquaresFour size={33} weight={`${viewState==="GRID"?"fill":"light"}`} />
+        </button>
+        <button value="LIST" onClick={() => handleViewState("LIST")} className={` hover:scale-110 transition-all ease-out duration-700`}>
+        <ListBullets size={33} weight={`${viewState==="LIST"?"fill":"light"}`} />
+        </button>
+      </span>
+    </section>
+  );
+};
+export default FilterSelect;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\Futter.jsx
+import {  ArrowCircleUpRight } from "@phosphor-icons/react";
+import { useSelector } from "react-redux";
+
+export default function Futter() {
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  const currentYear = new Date().getFullYear();
+
+  return (
+    <section
+      className={`mt-4 z-10 pt-1 pb-0 w-full flex fixed bottom-0 justify-center backdrop-blur ${
+        isDarkmode ? "bg-bg1/70 text-white" : "bg-white/70 text-black"
+      } roboto-condensed`}
+    >
+      <p className="flex items-center">
+        Copyrights
+        <a
+          href="https://webweaver-personalportfolio.netlify.app/"
+          className={`group font-semibold mx-2 flex items-center transition-all duration-300`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Webweaver
+          <ArrowCircleUpRight size={18} weight="duotone" className="ml-1 group-hover:translate-x-1 group-hover:-translate-y-1 transition-all ease-in-out duration-300" />
+        </a>
+        &copy; {currentYear}
+      </p>
+    </section>
+  );
+}
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\Navbar.jsx
+import { useDispatch, useSelector } from "react-redux";
+import { darkMode } from "../Global_state-redux/TaskActions";
+import { useState } from "react";
+import { Moon, Sun } from "@phosphor-icons/react";
+
+export default function Navbar() {
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  return (
+    <nav
+      className={` w-screen h-fit z-20 sticky top-0 text-5xl backdrop-blur-xl ${
+        isDarkmode ? "backdrop-brightness-75" : "bg-slate-100"
+      } transition-all ease-out`}
+    >
+      <div className="w-screen flex justify-between items-center px-8 py-3">
+        <h6
+          className={`text-sm smartphone:text-lg font-medium group-hover:tracking-widest ${
+            isDarkmode ? "text-w1" : "text-zinc-900"
+          } roboto-condensed transition-all ease-out duration-700 `}
+        >
+          ToDo Nest
+        </h6>
+        <DarkModeToggle />
+      </div>
+    </nav>
+  );
+}
+
+const DarkModeToggle = () => {
+  const [toggled, setToggled] = useState(true);
+  const dispatch = useDispatch();
+
+  const toggleDarkMode = () => {
+    setToggled(!toggled);
+    dispatch(darkMode(!toggled));
+  };
+
+  return (
+    <div
+      onClick={toggleDarkMode}
+      className={`w-10 h-6 p-0.5 flex items-center rounded-full transition-all ease-in-out ${
+        toggled ? "bg-w1" : "bg-zinc-900"
+      }`}
+    >
+      <div
+        className={`w-5 h-5 p-0.5 flex items-center justify-center rounded-full transition-all duration-150 ease-out ${
+          toggled ? "translate-x-4 bg-zinc-900" : " bg-w1"
+        }`}
+      >
+        {!toggled ? (
+          <Sun size={"100%"} weight="duotone" />
+        ) : (
+          <Moon size={"100%"} weight="duotone" />
+        )}
+      </div>
+    </div>
+  );
+};
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\SlideInNotifications.jsx
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import PropTypes from "prop-types";
+import { CheckSquareOffset, X, XCircle, CheckCircle } from "@phosphor-icons/react";
+import { isCompleteTask } from '../Global_state-redux/TaskActions';
+
+const NOTIFICATION_TTL = 3000; // Time-to-live for notifications in milliseconds
+
+const SlideInNotifications = ({ initialIsCompleted, taskId, dispatch }) => {
+  const [notifications, setNotifications] = useState([]);
+  const [isCompleted, setIsCompleted] = useState(initialIsCompleted);
+
+  const removeNotif = (id) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+  };
+
+  const generateNotificationText = (isCompleted) => {
+    return isCompleted ? "Task is marked as complete" : "Task is marked as incomplete";
+  };
+
+  const handleNotificationClick = () => {
+    const newCompletedStatus = !isCompleted;
+    setIsCompleted(newCompletedStatus);
+    dispatch(isCompleteTask({ id: taskId, isCompleted: newCompletedStatus }));
+
+    setNotifications((prev) => [
+      { id: Math.random(), text: generateNotificationText(newCompletedStatus) },
+      ...prev,
+    ]);
+  };
+
+  return (
+    <div className="flex items-center justify-center">
+      <button onClick={handleNotificationClick} className={`transition-all ${isCompleted?"text-green-500":"text-red-500"}`}>
+        {isCompleted ? (
+          <CheckCircle size={32} weight="duotone" className="hover:scale-110 duration-700 transition-all" />
+        ) : (
+          <XCircle size={32} weight="duotone" className="hover:scale-110 duration-700 transition-all" />
+        )}
+      </button>
+      <div className="flex flex-col gap-1 w-72 fixed bottom-2 right-2 z-50 pointer-events-none">
+        <AnimatePresence>
+          {notifications.map((n) => (
+            <Notification removeNotif={removeNotif} {...n} key={n.id} />
+          ))}
+        </AnimatePresence>
+      </div>
+    </div>
+  );
+};
+
+const Notification = ({ text, id, removeNotif }) => {
+  useEffect(() => {
+    const timeoutRef = setTimeout(() => {
+      removeNotif(id);
+    }, NOTIFICATION_TTL);
+
+    return () => clearTimeout(timeoutRef);
+  }, [id, removeNotif]);
+
+  return (
+    <motion.div
+      layout
+      initial={{ y: -15, scale: 0.95 }}
+      animate={{ y: 0, scale: 1 }}
+      exit={{ x: "100%", opacity: 0 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className="absolute -bottom-58 text-white p-2 flex items-start rounded gap-2 text-sm font-medium shadow-lg bg-black/20 backdrop-blur-xl pointer-events-auto"
+    >
+      <CheckSquareOffset size={20} weight="duotone" />
+      <span>{text}</span>
+      <button onClick={() => removeNotif(id)} className="ml-auto mt-0.5">
+        <X size={20} weight="bold" />
+      </button>
+    </motion.div>
+  );
+};
+
+SlideInNotifications.propTypes = {
+  initialIsCompleted: PropTypes.bool.isRequired,
+  taskId: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
+
+Notification.propTypes = {
+  text: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+  removeNotif: PropTypes.func.isRequired,
+};
+
+export default SlideInNotifications;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\TaskForm.jsx
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useDispatch } from "react-redux";
+import { addTask } from "../Global_state-redux/TaskActions";
+import PropTypes from "prop-types";
+import ColorButtons from "./ColorButtons";
+const TaskForm = ({ isClicked, setIsClicked }) => {
+  const dispatch = useDispatch();
+  const [taskHeading, setTaskHeading] = useState("");
+  const [taskText, setTaskText] = useState("");
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const taskHeading = formData.get("taskHeading");
+    const taskText = formData.get("taskText");
+    const taskbgCol = formData.get("taskbgCol");
+    if (taskText.trim() !== "") {
+      dispatch(addTask(taskText, taskHeading, taskbgCol));
+      setIsClicked(false);
+    }
+  };
+
+  const handleButtonClick = (color) => {
+    //setborderCol(calculateColor(color, isDarkmode));
+    document.getElementById("taskbgCol").value = color;
+  };
+
+  const handleKeyPress = (e, nextField) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      document.getElementById(nextField).focus();
+    }
+  };
+
+  return (
+    <>
+      {isClicked && (
+        <>
+          <section className="absolute top-0 z-30 w-screen h-screen flex items-center justify-center text-gray-900">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              onClick={() => setIsClicked(false)}
+              className={`z-10 w-full h-full backdrop-blur bg-black/70  absolute`}
+            ></motion.div>
+            <motion.div
+              key="form"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.15 }}
+              className={`z-20 w-fit bg-bg1 grid place-content-center p-6 rounded-lg shadow-2xl shadow-black/60 border `}
+            >
+              <p className="text-4xl tracking-tighter roboto-condensed my-1 mb-20 laptop:mb-8 text-slate-200">
+                Let&apos;s craft a new to-do!🚀
+              </p>
+              <form onSubmit={handleSubmit} className="flex flex-col gap-7">
+                <div className="relative z-10">
+                  <label
+                    className={`absolute left-2  text-sm text-white nunito tracking-tight transition-all ease-in-out duration-500 ${
+                      taskHeading ? "-top-5" : "top-0 opacity-0"
+                    }`}
+                  >
+                    Type an eye catchy title
+                  </label>
+                  <label
+                    className={`absolute left-3.5 text-md text-gray-700 transition-all duration-100 nunito tracking-tight top-3.5 ${
+                      taskHeading ? "-translate-y-2 opacity-0 " : ""
+                    }`}
+                  >
+                    ✏️ The heading here
+                  </label>
+                  <input
+                    type="text"
+                    name="taskHeading"
+                    value={taskHeading}
+                    onChange={(e) => setTaskHeading(e.target.value)}
+                    onKeyPress={(e) => handleKeyPress(e, "taskText")}
+                    placeholder=""
+                    className="px-2 py-3 w-full rounded-md border-2 border-gray-300 focus:border-blue-500 outline-none placeholder:text-gray-700 placeholder:text-md bg-slate-100"
+                  />
+                </div>
+                <div className="relative z-10">
+                  <label
+                    className={`absolute left-2 text-sm text-white nunito tracking-tight transition-all duration-500 ${
+                      taskText ? "-top-5" : "top-0 opacity-0"
+                    }`}
+                  >
+                    Writing stuff will make it happen
+                  </label>
+                  <label
+                    className={`absolute left-3.5 text-md text-gray-700 transition-all duration-100 nunito tracking-tight top-3.5 ${
+                      taskText ? "-translate-y-2 opacity-0 " : ""
+                    }`}
+                  >
+                    📝 Your To-Do here...
+                  </label>
+                  
+                  <textarea
+                  id="textinput"
+                    type="text"
+                    name="taskText"
+                    value={taskText}
+                    onChange={(e) => setTaskText(e.target.value)}
+                    onKeyPress={(e) => handleKeyPress(e, "taskbgCol")}
+                    className="w-full p-2.5 pt-3 h-28 align-top text-left focus:border-blue-500 outline-none rounded-md border-2 border-gray-300 bg-slate-100 overflow-wrap break-word text-wrap"
+                  />
+                </div>
+                <input type="hidden" id="taskbgCol" name="taskbgCol" value="" />
+                <div className="flex gap-4 items-center">
+                  <ColorButtons func={handleButtonClick}/>
+                </div>
+                <button
+                  type="submit"
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md"
+                >
+                  Add task
+                </button>
+              </form>
+            </motion.div>
+          </section>
+        </>
+      )}
+    </>
+  );
+};
+
+TaskForm.propTypes = {
+  isClicked: PropTypes.bool.isRequired,
+  setIsClicked: PropTypes.func.isRequired,
+};
+
+export default TaskForm;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\TaskModal.jsx
+import SlideInNotifications from "./SlideInNotifications";
+import { Palette, Trash } from "@phosphor-icons/react";
+import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
+import { changeTaskColor, deleteTask } from "../Global_state-redux/TaskActions";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import ColorButtons from "./ColorButtons";
+
+const calculateColor = (color, isDarkmode) => {
+  if (!isDarkmode) {
+    switch (color) {
+      case "AzureBreeze":
+        return "border-c1";
+      case "MeadowMist":
+        return "border-c2";
+      case "PeachyBlush":
+        return "border-c3";
+      case "LavenderHaze":
+        return "border-c4";
+      case "CoralCrush":
+        return "border-c5";
+      case "MintWhisper":
+        return "border-c6";
+      default:
+        return "border border-black/20";
+    }
+  } else {
+    switch (color) {
+      case "AzureBreeze":
+        return "border-c1lt";
+      case "MeadowMist":
+        return "border-c2lt";
+      case "PeachyBlush":
+        return "border-c3lt";
+      case "LavenderHaze":
+        return "border-c4lt";
+      case "CoralCrush":
+        return "border-c5lt";
+      case "MintWhisper":
+        return "border-c6lt";
+      default:
+        return "border border-w1/30";
+    }
+  }
+};
+
+const TaskModal = ({ task, setSelectedTask }) => {
+  const [palettExpanded, setpalettExpanded] = useState(false);
+  const [borderColor, setBorderColor] = useState("");
+  const [buttonValue, setButtonValue] = useState(1);
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const borderClass = calculateColor(task.bgCol, isDarkmode);
+    setBorderColor(borderClass);
+    setButtonValue(() => {
+      switch (task.bgCol) {
+        case "AzureBreeze":
+          return 2;
+        case "MeadowMist":
+          return 3;
+        case "PeachyBlush":
+          return 4;
+        case "LavenderHaze":
+          return 5;
+        case "CoralCrush":
+          return 6;
+        case "MintWhisper":
+          return 7;
+        default:
+          return 1;
+      }
+    })
+  }, [task.bgCol, isDarkmode, task]);
+
+  const handleColorChange = (color) => {
+    const borderClass = calculateColor(color, isDarkmode);
+    setBorderColor(borderClass);
+    setButtonValue(() => {
+      switch (color) {
+        case "AzureBreeze":
+          return 2;
+        case "MeadowMist":
+          return 3;
+        case "PeachyBlush":
+          return 4;
+        case "LavenderHaze":
+          return 5;
+        case "CoralCrush":
+          return 6;
+        case "MintWhisper":
+          return 7;
+        default:
+          return 1;
+      }
+    })
+    dispatch(changeTaskColor(task.id, color));
+    setpalettExpanded(false); // Close palette after color selection
+  };
+
+  const handleDeleteTask = (taskId) => {
+    dispatch(deleteTask(taskId));
+    setSelectedTask(null);
+  };
+
+  if (!task) return null;
+
+  return (
+    <section className="fixed inset-0 z-30 grid place-content-center bg-black/60 backdrop-blur-sm">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.1 }}
+        onClick={() => setSelectedTask(null)}
+        className="absolute w-full h-full"
+      ></motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.15 }}
+        className={`z-50 relative flex flex-col justify-between rounded-md max-w-md w-96 backdrop-brightness-50 laptop:w-[550px] h-fit laptop:h-[450px] p-2 pt-6 px-6 border ${borderColor} ${
+          !isDarkmode ? "bg-white/95 text-bg1" : "bg-bg1/95 text-w1"
+        }`}
+      >
+        <span>
+          <h1 className="text-2xl font-bold mb-2 roboto-condensed tracking-wider">{task.heading}</h1>
+          <h2 className="text-xs text-gray-500 mb-4 ml-1 tracking-tighter">{`${task.creationTime.datePart} at ${task.creationTime.timePart}`}</h2>
+          <div className="overflow-y-auto overflow-x-hidden mb-4 w-full h-52">
+            <p className="quicksand font-medium tracking-wide">{task.text}</p>
+          </div>
+        </span>
+        <div className="flex justify-between items-center mt-8">
+          <div className="flex items-center my-1">
+            <AnimatePresence>
+              {!palettExpanded && (
+                <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                  <Palette
+                    onClick={() => setpalettExpanded(true)}
+                    weight="duotone"
+                    size={34}
+                    className={`cursor-pointer ${isDarkmode ? "text-yellow-600" : "text-yellow-500"} hover:scale-105 transition-all duration-700`}
+                  />
+                </motion.span>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {palettExpanded && <ColorButtons func={handleColorChange} buttonVal={buttonValue} />}
+            </AnimatePresence>
+          </div>
+          <div className="flex items-center space-x-2">
+            <SlideInNotifications
+              initialIsCompleted={task.completed}
+              taskId={task.id}
+              dispatch={dispatch}
+            />
+            <Trash
+              onClick={() => handleDeleteTask(task.id)}
+              size={32}
+              weight="duotone"
+              className="hover:scale-105 transition-all cursor-pointer"
+            />
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  );
+};
+
+TaskModal.propTypes = {
+  task: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    bgCol: PropTypes.string.isRequired,
+    completed: PropTypes.bool.isRequired,
+    heading: PropTypes.string.isRequired,
+    creationTime: PropTypes.string.isRequired,
+    text: PropTypes.string.isRequired,
+  }),
+  setSelectedTask: PropTypes.func.isRequired,
+};
+
+export default TaskModal;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\Tasks.jsx
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence, motion } from "framer-motion";
+import TaskModal from "./TaskModal";
+import {
+  Smiley,
+  SmileyBlank,
+  SmileyMelting,
+  SmileyXEyes,
+} from "@phosphor-icons/react";
+import { fetchTasks } from "../Global_state-redux/TaskActions";
+
+const Tasks = () => {
+  const dispatch = useDispatch();
+  const [selectedTask, setSelectedTask] = useState(null);
+  const state = useSelector((state) => state.tasks);
+  const tasks = state.tasks;
+  const currentFilter = state.filter;
+  const viewState = state.viewState;
+  useEffect(() => {
+    dispatch(fetchTasks()); // Dispatch fetchTasks action only once when component mounts
+  }, [dispatch]);
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  const calculateColor = (color) => {
+    if (!isDarkmode) {
+      switch (color) {
+        case "AzureBreeze":
+          return "bg-c1";
+        case "MeadowMist":
+          return "bg-c2";
+        case "PeachyBlush":
+          return "bg-c3";
+        case "LavenderHaze":
+          return "bg-c4";
+        case "CoralCrush":
+          return "bg-c5";
+        case "MintWhisper":
+          return "bg-c6";
+        default:
+          return "border border-black/20";
+      }
+    } else {
+      switch (color) {
+        case "AzureBreeze":
+          return "bg-c1lt";
+        case "MeadowMist":
+          return "bg-c2lt";
+        case "PeachyBlush":
+          return "bg-c3lt";
+        case "LavenderHaze":
+          return "bg-c4lt";
+        case "CoralCrush":
+          return "bg-c5lt";
+        case "MintWhisper":
+          return "bg-c6lt";
+        default:
+          return "border border-w1/30";
+      }
+    }
+  };
+  const filteredTasks = Array.isArray(tasks)
+    ? tasks.filter((task) => {
+        if (currentFilter === "ALL") return true;
+        if (currentFilter === "COMPLETED") return task.completed;
+        if (currentFilter === "INCOMPLETE") return !task.completed;
+        return true;
+      })
+    : [];
+
+  const containerClasses =
+    viewState === "LIST" ? "flex flex-col" : "grid grid-cols-2";
+
+  return (
+    <div className="h-fit flex justify-center items-center">
+      <AnimatePresence>
+        {filteredTasks.length ? (
+          <>
+            <motion.ul
+              initial={{ opacity: 0,  }}
+              animate={{ opacity: 1,  }}
+              exit={{ opacity: 0, }}
+              transition={{ type:"spring", duration: 0.5 }}
+              className={`w-11/12 gap-3 smartphone:gap-2 p-2 ${containerClasses}`}
+            >
+              {filteredTasks
+                .map((task, index) => (
+                  <motion.li
+                    layout
+                    key={index}
+                    initial={{ opacity: 0, scale:0.5 }}
+                    animate={{ opacity: 1, scale:1}}
+                    exit={{ opacity: 0, scale:0.5}}
+                    transition={{ type:"spring", duration: 0.5 }}
+                    className={`relative rounded-md p-4  shadow-lg ${calculateColor(
+                      task.bgCol
+                    )} transition-colors ease-out duration-300 overflow-hidden max-h-30 text-nowrap smartphone:min-h-20 cursor-pointer hover:shadow-2xl ${isDarkmode?"hover:shadow-white/10":"hover:shadow-bg1/30"}`}
+                    onClick={() => setSelectedTask(task)}
+                  >
+                    <span className="block mb-4">
+                      <h1 className="text-2xl tracking-wider font-semibold roboto-condensed">
+                        {task.heading}
+                      </h1>
+                      <h2
+                        className={`text-xs ml-1 flex tracking-tighter ${
+                          isDarkmode ? "text-gray-100" : "text-bg1"
+                        } transition-all ease-out duration-300 roboto-condensed`}
+                      >
+                        {task.creationTime.datePart}
+                      </h2>
+                    </span>
+                    <p
+                      className={`text-wrap max-h-8 overflow-wrap break-word font-medium text-md quicksand ${
+                        task.completed ? "line-through" : ""
+                      }`}
+                    >
+                      {task.text}
+                      {task.text.length>100&& <span className={`absolute bottom-1 right-8 px-6  ${calculateColor(task.bgCol)} text-xl`}>..</span>}
+                    </p>
+                  </motion.li>
+                ))
+                .reverse()}
+            </motion.ul>
+            <AnimatePresence>
+              {selectedTask && (
+                <TaskModal
+                  task={selectedTask}
+                  setSelectedTask={setSelectedTask}
+                  colorfunc={calculateColor}
+                />
+              )}
+            </AnimatePresence>
+          </>
+        ) : (
+          <div className="text-2xl tracking-tight h-full w-full flex smartphone:flex-col items-center justify-center text-center gap-1 mt-36 nunito">
+            <AnimatePresence>
+              {currentFilter !== "ALL" && (
+                <>
+                  {currentFilter === "COMPLETED" ? (
+                    <motion.div className="flex smartphone:flex-col items-center justify-center text-center gap-1"
+                     initial={{ opacity: 0,  }}
+                    animate={{ opacity: 1,  }}
+                    exit={{ opacity: 0 }}>
+                      <SmileyXEyes
+                        size={"100%"}
+                        className="text-yellow-400 w-14 laptop:w-28 "
+                        weight="duotone"
+                      />
+                      Looks like you haven&apos;t completed any tasks yet!
+                      <br />
+                      {"(Or haven't added any)"}
+                    </motion.div>
+                  ) : (
+                    <motion.div className="flex smartphone:flex-col items-center justify-center text-center gap-1" initial={{ opacity: 0, }}
+                    animate={{ opacity: 1, }}
+                    exit={{ opacity: 0 }}>
+                      <Smiley
+                        size={"100%"}
+                        className="text-yellow-400 w-14 laptop:w-28 "
+                        weight="duotone"
+                      />{" "}
+                      Yay, you have completed all the tasks <br />
+                      {"(Or haven't added any)"}
+                    </motion.div>
+                  )}
+                </>
+              )}
+            </AnimatePresence>
+            <AnimatePresence>
+              {currentFilter === "ALL" && (
+                <AnimatePresence>
+                  {filteredTasks.length === 0 ? (
+                    <motion.div className="flex smartphone:flex-col items-center justify-center text-center gap-1" initial={{ opacity: 0,}}
+                    animate={{ opacity: 1,  }}
+                    exit={{ opacity: 0 }}>
+                      <SmileyMelting
+                        size={"100%"}
+                        className="text-yellow-400 w-14 laptop:w-28 "
+                        weight="duotone"
+                      />
+                      You haven&apos;t added any tasks yet!
+                    </motion.div>
+                  ) : (
+                    <motion.div className="flex smartphone:flex-col items-center justify-center text-center gap-1" initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}>
+                      <SmileyBlank
+                        size={"100%"}
+                        className="text-yellow-400 w-14 laptop:w-28 "
+                        weight="duotone"
+                      />
+                      Looks like you have done all the tasks!
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              )}
+            </AnimatePresence>
+          </div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+export default Tasks;
+
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\components\WelcomePage.jsx
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { motion, AnimatePresence } from "framer-motion";
+import { ListChecks } from "@phosphor-icons/react";
+
+const Tags = ["Plan!", "Organise!", "Achieve!"];
+const tagColors = ["text-c1", "text-c6", "text-c5"];
+
+export default function WelcomePage() {
+  const isDarkmode = useSelector((state) => state.tasks.darkMode);
+  const [currentTag, setCurrentTag] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentTag((prevTag) => (prevTag + 1) % Tags.length);
+    }, 630); 
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <motion.div initial={{  opacity: 0.7 }}
+    animate={{  opacity: 1 }}
+    exit={{  opacity: 0 }}
+      className={`flex flex-col-reverse absolute z-50 items-center justify-center h-screen w-screen bg-bg1 ${
+        isDarkmode ? " text-white" : "bg-gray-100 "
+      }`}
+    >
+      <motion.span
+        id="container"
+        className="relative mb-36 flex gap-1 items-center justify-center text-5xl quicksand font-extrabold"
+      >
+        <div>
+          <ListChecks
+            size={100}
+            weight="bold"
+            className="absolute top-0 left-0 bg-bg1 text-c1"
+          />
+        </div>
+        <motion.div initial={{x:-100, opacity:0}} animate={{x:0, opacity:1}} className="ml-24 my-7 bg-gradient-to-r from-c1 to-c3 text-transparent bg-clip-text">
+          ToDo Nest
+        </motion.div>
+      </motion.span>
+      <AnimatePresence>
+      <motion.h1
+  layout
+  key={Tags[currentTag]}
+  initial={{ scaleX: 0, opacity: 0 }}
+  animate={{ scaleX: 1, opacity: 1 }}
+  exit={{ scaleX: 0, opacity: 0 }}
+  transition={{ duration: 0.3, delay: 0.3 }} // Add delay here
+  className={`text-4xl font-bold caveat absolute ${tagColors[currentTag]}`}
+>
+  {Tags[currentTag]}
+</motion.h1>
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\Global_state-redux\ConfigStore.js
+import { configureStore } from '@reduxjs/toolkit';
+import {thunk} from 'redux-thunk';
+import taskReducer from './TaskReducer';
+
+const store = configureStore({
+  reducer: {
+    tasks: taskReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunk),
+  devTools: true, // Enable Redux DevTools extension
+});
+
+export default store;
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\Global_state-redux\TaskActions.js
+import { v4 as uuidv4 } from 'uuid';
+
+// Action Types
+export const DARK_MODE = 'DARK_MODE'; 
+export const VIEW_STATE = 'VIEW_STATE';
+export const ADD_TASK = 'ADD_TASK';
+export const DELETE_TASK = 'DELETE_TASK';
+export const ISCOMPLETED_TASK = 'ISCOMPLETED_TASK';
+export const FILTER_TASK = 'FILTER_TASK';
+export const FETCH_TASKS_SUCCESS = 'FETCH_TASKS_SUCCESS';
+export const CHANGE_TASK_COLOR = 'CHANGE_TASK_COLOR';
+// Action Creators
+export const darkMode = (isOn) => ({
+  type: DARK_MODE,
+  payload: { isOn },
+});
+
+export const ViewState = (types) => ({
+  type: VIEW_STATE,
+  payload: { types },
+});
+
+export const fetchTasks = () => {
+  return async (dispatch) => {
+    try {
+      const retrievedString = localStorage.getItem("myObjectKey");
+      const retrievedObject = JSON.parse(retrievedString) || [];
+      dispatch({ type: FETCH_TASKS_SUCCESS, payload: { tasks: retrievedObject } });
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+    }
+  };
+};
+
+const updateLocalStorage = (tasks) => {
+  localStorage.setItem("myObjectKey", JSON.stringify(tasks));
+};
+
+export const addTask = (text, heading, bgCol) => (dispatch, getState) => {
+  const formatDateTime = () => {
+    const date = new Date();
+    const months = [
+      "January", "February", "March", "April", "May", "June", "July",
+      "August", "September", "October", "November", "December"
+    ];
+    const day = date.getDate();
+    const month = months[date.getMonth()];
+    const year = date.getFullYear();
+  
+    let hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    const strMinutes = minutes < 10 ? '0' + minutes : minutes;
+  
+    const datePart = `${day}-${month}-${year}`;
+    const timePart = `${hours}:${strMinutes} ${ampm}`;
+    return { datePart, timePart };
+  };
+  const newTask = {
+    id: uuidv4(),
+    creationTime: formatDateTime(),
+    bgCol: bgCol,
+    text: text,
+    heading: heading,
+  };
+  dispatch({ type: ADD_TASK, payload: newTask });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+export const changeTaskColor = (taskId, newColor) => (dispatch, getState) => {
+  dispatch({
+    type: CHANGE_TASK_COLOR,
+    payload: { taskId, newColor },
+  });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+export const deleteTask = (taskId) => (dispatch, getState) => {
+  dispatch({
+    type: DELETE_TASK,
+    payload: taskId,
+  });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+export const isCompleteTask = (taskId) => (dispatch, getState) => {
+  dispatch({
+    type: ISCOMPLETED_TASK,
+    payload: taskId.id,
+  });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+export const FilterTask = (filter) => (dispatch, getState) => {
+  dispatch({
+    type: FILTER_TASK,
+    payload: filter,
+  });
+  updateLocalStorage(getState().tasks.tasks);
+};
+
+// File: \Users\bilal\OneDrive\Desktop\todo\ToDoNest\src\Global_state-redux\TaskReducer.js
+import {
+  ADD_TASK, DELETE_TASK, FILTER_TASK, ISCOMPLETED_TASK,
+  FETCH_TASKS_SUCCESS, DARK_MODE, VIEW_STATE, CHANGE_TASK_COLOR
+} from './TaskActions';
+
+const initialState = {
+  tasks: [],
+  filter: "ALL",
+  darkMode: true,
+  viewState: "GRID",
+};
+
+const taskReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case FETCH_TASKS_SUCCESS:
+      return {
+        ...state,
+        tasks: action.payload.tasks,
+      };
+    case ADD_TASK:
+      return {
+        ...state,
+        tasks: [
+          ...state.tasks,
+          {
+            id: action.payload.id,
+            creationTime: action.payload.creationTime,
+            bgCol: action.payload.bgCol,
+            text: action.payload.text,
+            heading: action.payload.heading,
+            completed: false, // Ensure new tasks have a default 'completed' status
+          },
+        ],
+      };
+    case DELETE_TASK:
+      return {
+        ...state,
+        tasks: state.tasks.filter(task => task.id !== action.payload),
+      };
+    case FILTER_TASK:
+      return {
+        ...state,
+        filter: action.payload,
+      };
+      case ISCOMPLETED_TASK:
+  return {
+    ...state,
+    tasks: state.tasks.map(task => {
+      if (task.id === action.payload) {
+        const updatedTask = { ...task, completed: !task.completed };
+        return updatedTask;
+      }
+      else{
+        console.log(action.payload)
+        return task;
+      }
+      
+    }),
+  };
+
+    case DARK_MODE:
+      return {
+        ...state,
+        darkMode: action.payload.isOn,
+      };
+    case VIEW_STATE:
+      return {
+        ...state,
+        viewState: action.payload.types,
+      };
+    case CHANGE_TASK_COLOR:
+      return {
+        ...state,
+        tasks: state.tasks.map(task =>
+          task.id === action.payload.taskId ? { ...task, bgCol: action.payload.newColor } : task
+        ),
+      };
+    default:
+      return state;
+  }
+};
+
+export default taskReducer;
+
+Read the code and wait for my instructions
