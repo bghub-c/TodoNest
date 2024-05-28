@@ -16,7 +16,7 @@ export default function App() {
     // Show WelcomePage for 1.5 seconds
     const timer = setTimeout(() => {
       setShowWelcome(false);
-    }, 1500);
+    }, 2400);
     return () => clearTimeout(timer);
   }, []);
 
