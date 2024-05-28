@@ -36,7 +36,7 @@ export default function WelcomePage() {
             className="absolute top-0 left-0 bg-bg1 text-c1"
           />
         </div>
-        <motion.div initial={{x:-100, opacity:0}} animate={{x:0, opacity:1}} className="ml-24 my-6 bg-gradient-to-r from-c1 to-c3 text-transparent bg-clip-text">
+        <motion.div initial={{x:-100, opacity:0}} animate={{x:0, opacity:1}} className="ml-24 my-7 bg-gradient-to-r from-c1 to-c3 text-transparent bg-clip-text">
           ToDo Nest
         </motion.div>
       </motion.span>
