@@ -18,7 +18,6 @@ const taskReducer = (state = initialState, action) => {
         tasks: action.payload.tasks,
       };
     case ADD_TASK:
-      console.log("Add task", state);
       return {
         ...state,
         tasks: [
