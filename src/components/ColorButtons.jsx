@@ -2,10 +2,13 @@ import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 export default function ColorButtons({func, buttonVal}){
+  const [tapped, setTapped]=useState(buttonVal);
   useEffect(() => {
     setTapped(buttonVal);
+    console.log(`From UseEffect ${buttonVal}`);
   }, [buttonVal]);
-  const [tapped, setTapped]=useState(buttonVal);
+
+  console.log(`From outside UseEffect ${buttonVal}`);
     return(
         <motion.div
         initial={{x:-100, opacity:0}}
