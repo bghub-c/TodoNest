@@ -7,7 +7,7 @@ export default function Futter() {
 
   return (
     <section
-      className={`mt-4 z-10 pt-1 pb-0 w-full flex absolute bottom-0 justify-center backdrop-blur ${
+      className={`mt-4 z-10 pt-1 pb-0 w-full flex fixed bottom-0 justify-center backdrop-blur ${
         isDarkmode ? "bg-bg1/70 text-white" : "bg-white/70 text-black"
       } roboto-condensed`}
     >
