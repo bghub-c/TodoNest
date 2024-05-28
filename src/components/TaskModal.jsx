@@ -55,7 +55,25 @@ const TaskModal = ({ task, setSelectedTask }) => {
   useEffect(() => {
     const borderClass = calculateColor(task.bgCol, isDarkmode);
     setBorderColor(borderClass);
-  }, [task.bgCol, isDarkmode, task]);
+    setButtonValue(() => {
+      switch (color) {
+        case "AzureBreeze":
+          return 2;
+        case "MeadowMist":
+          return 3;
+        case "PeachyBlush":
+          return 4;
+        case "LavenderHaze":
+          return 5;
+        case "CoralCrush":
+          return 6;
+        case "MintWhisper":
+          return 7;
+        default:
+          return 1;
+      }
+    })
+  }, [task.bgCol,color, isDarkmode, task]);
 
   const handleColorChange = (color) => {
     const borderClass = calculateColor(color, isDarkmode);
