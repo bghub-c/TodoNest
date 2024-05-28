@@ -48,9 +48,7 @@ const taskReducer = (state = initialState, action) => {
     ...state,
     tasks: state.tasks.map(task => {
       if (task.id === action.payload) {
-        console.log("before isComplete", { ...task });
         const updatedTask = { ...task, completed: !task.completed };
-        console.log("after isComplete", { ...updatedTask });
         return updatedTask;
       }
       else{
