@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addTask } from "../Global_state-redux/TaskActions";
 import PropTypes from "prop-types";
 import ColorButtons from "./ColorButtons";
 const TaskForm = ({ isClicked, setIsClicked }) => {
   const dispatch = useDispatch();
-  const isDarkmode = useSelector((state) => state.tasks.darkMode);
   const [taskHeading, setTaskHeading] = useState("");
   const [taskText, setTaskText] = useState("");
   const handleSubmit = (e) => {
@@ -44,9 +43,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
               onClick={() => setIsClicked(false)}
-              className={`z-10 w-full h-full backdrop-blur ${
-                !isDarkmode ? "bg-black/70" : ""
-              } absolute`}
+              className={`z-10 w-full h-full backdrop-blur bg-black/70  absolute`}
             ></motion.div>
             <motion.div
               key="form"

@@ -108,7 +108,7 @@ const TaskModal = ({ task, setSelectedTask }) => {
   if (!task) return null;
 
   return (
-    <section className="fixed inset-0 z-30 grid place-content-center bg-black/60 backdrop-blur">
+    <section className="fixed inset-0 z-30 grid place-content-center bg-black/60 backdrop-blur-sm">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
