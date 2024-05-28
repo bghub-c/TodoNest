@@ -56,7 +56,7 @@ const TaskModal = ({ task, setSelectedTask }) => {
     const borderClass = calculateColor(task.bgCol, isDarkmode);
     setBorderColor(borderClass);
     setButtonValue(() => {
-      switch (color) {
+      switch (task.bgCol) {
         case "AzureBreeze":
           return 2;
         case "MeadowMist":
@@ -73,7 +73,7 @@ const TaskModal = ({ task, setSelectedTask }) => {
           return 1;
       }
     })
-  }, [task.bgCol,color, isDarkmode, task]);
+  }, [task.bgCol, isDarkmode, task]);
 
   const handleColorChange = (color) => {
     const borderClass = calculateColor(color, isDarkmode);
