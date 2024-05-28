@@ -5,10 +5,7 @@ export default function ColorButtons({func, buttonVal}){
   const [tapped, setTapped]=useState(buttonVal);
   useEffect(() => {
     setTapped(buttonVal);
-    console.log(`From UseEffect ${buttonVal}`);
   }, [buttonVal]);
-
-  console.log(`From outside UseEffect ${buttonVal}`);
     return(
         <motion.div
         initial={{x:-100, opacity:0}}
