@@ -13,7 +13,7 @@ export default function WelcomePage() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTag((prevTag) => (prevTag + 1) % Tags.length);
-    }, 800); // Change tag every 0.8 seconds
+    }, 600); 
     return () => clearInterval(interval);
   }, []);
 

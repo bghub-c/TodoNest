@@ -7,6 +7,7 @@ import Tasks from "./components/Tasks";
 import FilterSelect from "./components/FilterSelect";
 import { fetchTasks } from "./Global_state-redux/TaskActions";
 import WelcomePage from "./components/WelcomePage";
+import { AnimatePresence } from "framer-motion";
 
 export default function App() {
   const [showWelcome, setShowWelcome] = useState(true);
@@ -16,7 +17,7 @@ export default function App() {
     // Show WelcomePage for 1.5 seconds
     const timer = setTimeout(() => {
       setShowWelcome(false);
-    }, 2400);
+    }, 2050);
     return () => clearTimeout(timer);
   }, []);
 
@@ -28,7 +29,7 @@ export default function App() {
 
   return (
     <div className="h-full relative">
-      {showWelcome ? (
+     <AnimatePresence> {showWelcome ? (
         <WelcomePage />
       ) : (
         <section className={`w-screen h-screen pb-10 overflow-x-hidden flex flex-col ${isDarkmode ? "bg-bg1 text-white" : ""} transition-all`}>
@@ -37,7 +38,7 @@ export default function App() {
           <FilterSelect />
           <Tasks />
         </section>
-      )}
+      )}</AnimatePresence>
       <Futter />
     </div>
   );
