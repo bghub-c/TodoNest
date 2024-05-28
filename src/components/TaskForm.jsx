@@ -4,13 +4,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addTask } from "../Global_state-redux/TaskActions";
 import PropTypes from "prop-types";
 import ColorButtons from "./ColorButtons";
-
 const TaskForm = ({ isClicked, setIsClicked }) => {
   const dispatch = useDispatch();
   const isDarkmode = useSelector((state) => state.tasks.darkMode);
   const [taskHeading, setTaskHeading] = useState("");
   const [taskText, setTaskText] = useState("");
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -24,6 +22,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
   };
 
   const handleButtonClick = (color) => {
+    //setborderCol(calculateColor(color, isDarkmode));
     document.getElementById("taskbgCol").value = color;
   };
 
@@ -55,7 +54,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.15 }}
-              className="z-20 w-fit bg-bg1 grid place-content-center p-6 rounded-lg shadow-2xl shadow-black/50"
+              className={`z-20 w-fit bg-bg1 grid place-content-center p-6 rounded-lg shadow-2xl shadow-black/60 border `}
             >
               <p className="text-4xl tracking-tighter roboto-condensed my-1 mb-20 laptop:mb-8 text-slate-200">
                 Let&apos;s craft a new to-do!🚀
@@ -114,7 +113,7 @@ const TaskForm = ({ isClicked, setIsClicked }) => {
                 </div>
                 <input type="hidden" id="taskbgCol" name="taskbgCol" value="" />
                 <div className="flex gap-4 items-center">
-                  <ColorButtons func={handleButtonClick} />
+                  <ColorButtons func={handleButtonClick}/>
                 </div>
                 <button
                   type="submit"
